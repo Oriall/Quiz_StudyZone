@@ -45,7 +45,7 @@ function handleAnswer(button, selectedOption) {
 // ===== Replace this with your Gemini API integration =====
 async function fetchQuestionFromGemini() {
   const prompt = `
-Hãy tạo một câu hỏi trắc nghiệm từ vựng tiếng Anh như sau(không trùng lặp với câu trước):
+Hãy tạo một câu hỏi trắc nghiệm từ vựng tiếng Anh mà người bản địa hay dùng như sau:
 - Một từ tiếng Anh bất kỳ.
 - 4 lựa chọn nghĩa tiếng Việt, trong đó 1 là đúng.
 - Trả về JSON như sau:
