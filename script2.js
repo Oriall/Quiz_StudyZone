@@ -57,7 +57,7 @@ Hãy tạo một câu hỏi trắc nghiệm từ vựng tiếng Anh mà người
 `;
 
   // Replace YOUR_API_KEY_HERE with your actual Gemini API key and ensure the API is enabled in your Google Cloud project.
-  const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=9999", {
+  const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyB856seywOwGsTCEguKYw3vfRttPiYlGJA", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
