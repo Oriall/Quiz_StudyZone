@@ -81,7 +81,7 @@ fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:genera
 
 ```bash
 # 1. Tải về source code
-git clone https://github.com/yourusername/vocabulary-quiz.git
+git clone https://github.com/Oriall/Quiz_StudyZone.git
 
 # 2. Mở file index.html bằng trình duyệt
 ```
