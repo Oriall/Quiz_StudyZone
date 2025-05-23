@@ -74,7 +74,7 @@ fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:
 
 | Chọn môn học | Câu hỏi xuất hiện |
 |-------------|------------------|
-| ![Popup](./img/minhhoa2.png) | ![Quiz](./img/minhhoa2.png) |
+| ![Popup](./img/chon_mon.png) | ![Quiz](./img/minhhoa2.png) |
 
 ---
 
