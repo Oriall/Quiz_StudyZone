@@ -10,10 +10,20 @@
 </head>
 
 <body>
-  <div class="quiz-container">
-    <h2 id="question">Click to Begin...</h2>
-    <div id="options" class="options-container"></div>
+  <div id="subject-popup" class="popup">
+    <div class="popup-content">
+      <h3>Chọn môn học 🤖</h3>
+      <button onclick="selectSubject('it')">Tin học</button>
+      <button onclick="selectSubject('english')">Tiếng Anh</button>
+      <button onclick="selectSubject('math')">Toán Học</button>
+      <button onclick="selectSubject('physics')">Vật Lý</button>
+    </div>
+  </div>
 
+  <div class="quiz-container">
+    <h2 id="question">Wait a minutes...</h2>
+    <div id="options" class="options-container"></div>
+    <div id="timer" class="timer">00:00</div>
     <button class="button" id="next-btn" onclick="loadQuestion()">
       Reload Now
       <svg fill="currentColor" viewBox="0 0 24 24" class="icon">

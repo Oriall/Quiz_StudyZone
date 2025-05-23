@@ -1,28 +1,32 @@
-# 📚 Vocabulary Quiz App
+# 🎓 Multi-Subject Quiz App
 
-Một ứng dụng web nhỏ gọn giúp người học Tin Học luyện tập kiến thức theo dạng **trắc nghiệm**, với dữ liệu sinh động được **tự động tạo từ Gemini API** (AI của Google).
+Ứng dụng web nhỏ gọn giúp học sinh luyện tập **trắc nghiệm kiến thức** đa môn học (Tin học, Tiếng Anh, Toán, Vật lý) với nội dung câu hỏi được **tự động sinh bởi Gemini API** (AI từ Google).
 
-![Preview](./img/anh_minh_hoa.png)
+![Preview](./img/minhhoa2.png)
 
 ---
 
-## 🚀 Tính năng
+## 🚀 Tính năng nổi bật
 
-- ✅ Tự động sinh câu hỏi kiến thức Tin Học kèm 4 lựa chọn.
-- ✅ Người dùng chọn đáp án bằng button.
-- ✅ Đúng => xanh 🍀 | Sai => đỏ ❌, hiện đáp án đúng.
-- ✅ Giao diện đơn giản, dễ dùng, hỗ trợ trên mọi thiết bị.
+- ✅ Chọn môn học: Tin học, Tiếng Anh, Toán, Vật lý.
+- ✅ Câu hỏi + 4 lựa chọn được AI tự động tạo.
+- ✅ Đánh giá ngay: Đúng ✅ (màu xanh), Sai ❌ (màu đỏ).
+- ✅ Hết thời gian sẽ tự hiển thị đáp án đúng.
+- ✅ Thời gian trả lời linh hoạt theo từng môn:
+  - ⏱ 5 giây với Tin học, Tiếng Anh.
+  - ⏱ 1 phút với Toán, Vật lý.
+- ✅ Giao diện sinh động với nền gif toàn màn hình.
 
 ---
 
 ## 🛠 Công nghệ sử dụng
 
-| Công nghệ | Mô tả |
-|----------|-------|
-| `HTML5`  | Cấu trúc trang |
-| `CSS3`   | Giao diện đẹp, phản hồi nhanh |
-| `JavaScript` | Xử lý logic, gọi API |
-| `Gemini API` (Google AI) | Sinh nội dung câu hỏi thông minh |
+| Công nghệ | Vai trò |
+|----------|---------|
+| `HTML5`  | Giao diện chính |
+| `CSS3`   | Thiết kế responsive, thêm nền động |
+| `JavaScript` | Logic, bộ đếm thời gian, gọi Gemini API |
+| `Gemini API` (Google AI) | Sinh câu hỏi trắc nghiệm thông minh |
 
 ---
 
@@ -31,71 +35,68 @@ Một ứng dụng web nhỏ gọn giúp người học Tin Học luyện tập 
 ```
 /project-root
 │
-├── index.html          # Giao diện chính
-├── style2.css          # File CSS
-├── script2.js          # Logic và gọi API
+├── index.html          # Trang chính
+├── style2.css          # CSS nền động + bố cục
+├── script2.js          # Logic, đếm ngược, gọi API
 ├── img/
-│   └── demo-preview.png # Hình ảnh minh họa
+│   └── anh_minh_hoa.png  # Hình minh họa
 ```
 
 ---
 
-## 🧠 Cách hoạt động
+## 🧠 Cách sử dụng
 
-1. Nhấn **"Next Question"** để gọi API Gemini tạo một câu hỏi.
-2. Hệ thống hiển thị kiến thức và 4 nghĩa tiếng Việt.
-3. Người dùng chọn đáp án:
-   - Nếu đúng: nút chuyển màu **xanh**.
-   - Nếu sai: nút sai chuyển **đỏ**, nút đúng chuyển **xanh**.
-4. Nhấn lại nút để tiếp tục câu hỏi mới.
+1. Truy cập giao diện.
+2. Chọn môn học trong popup.
+3. Hệ thống sinh câu hỏi tương ứng.
+4. Người dùng chọn đáp án:
+   - Nếu đúng ✅: chuyển màu xanh.
+   - Nếu sai ❌: chuyển đỏ và hiển thị đáp án đúng.
+5. Nếu hết thời gian: tự động tô đáp án đúng.
+6. Nhấn “Reload Now” để nhận câu hỏi mới.
 
 ---
 
 ## 🔑 Hướng dẫn tích hợp API Gemini
 
-1. Truy cập [https://makersuite.google.com/app](https://makersuite.google.com/app) và đăng nhập.
-2. Tạo API Key mới.
-3. Thay dòng sau trong `script2.js`:
+1. Truy cập [https://makersuite.google.com/app](https://makersuite.google.com/app) để tạo API key.
+2. Mở file `script2.js`, tìm dòng:
 
 ```js
-fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=999999", {
+fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=YOUR_KEY", {
 ```
 
-👉 bằng:
-
-```js
-fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_API_KEY", {
-```
+3. Thay `YOUR_KEY` bằng API Key của bạn.
 
 ---
 
 ## 🖼 Hình ảnh minh họa
 
-| Trang chính | Sau khi chọn sai |
+| Chọn môn học | Câu hỏi xuất hiện |
 |-------------|------------------|
-| ![Quiz](./img/anh_minh_hoa.png) | |
+| ![Popup](./img/minhhoa2.png) | ![Quiz](./img/minhhoa2.png) |
 
 ---
 
-## 📥 Cài đặt và chạy (local)
+## 📥 Cài đặt & chạy thử
 
 ```bash
-# 1. Tải về source code
+# Clone dự án về máy
 git clone https://github.com/Oriall/Quiz_StudyZone.git
 
-# 2. Mở file index.html bằng trình duyệt
+# Mở file index.html trên trình duyệt bất kỳ
 ```
 
-> 🔒 Lưu ý: API chỉ hoạt động nếu key còn hiệu lực và được cấp phép.
+> ⚠️ API yêu cầu kết nối mạng và API key hợp lệ từ Google.
 
 ---
 
 ## 📩 Liên hệ
 
-- Tác giả: **Oriall**
-- Email: [vokhanhtoannghithu@gmail.com](mailto:vokhanhtoannghithu@gmail.com)
-- GitHub: [github.com/oriall](https://github.com/Oriall)
+- **Tác giả**: Oriall
+- **Email**: [vokhanhtoannghithu@gmail.com](mailto:vokhanhtoannghithu@gmail.com)
+- **GitHub**: [github.com/oriall](https://github.com/oriall)
 
 ---
 
-© 2025 Vocabulary Quiz App. All rights reserved.
+© 2025 Multi-Subject Quiz App. All rights reserved.

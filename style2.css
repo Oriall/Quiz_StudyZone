@@ -1,20 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code:wght@300..700&display=swap');
+*{
+  font-family: 'Fira Code';
+}
 body {
   font-family: Arial, sans-serif;
-  background: #f4f4f4;
+  background: url('./img/evening-sky.png') no-repeat center center fixed;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  overflow: hidden;
+  margin: 0;
 }
 
 .quiz-container {
-  background: white;
+  background: #1E1E2E;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 150px 0 rgba(239, 241, 245, 0.11);
   width: 90%;
   max-width: 500px;
+  color: #BBBBC0;
   text-align: center;
 }
 
@@ -32,8 +38,16 @@ button.option-btn {
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  background: #eee;
-  transition: background 0.3s;
+  background-color: #30303F;
+  color: #BBBBC0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.option-btn:hover {
+  background-color: #CAA6F9;
+  color: #1E1E2E;
+  transform: scale(1.05);
 }
 
 button.option-btn.correct {
@@ -140,3 +154,50 @@ button.option-btn.incorrect {
     left: 100%;
   }
 }
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content {
+  padding: 30px 40px;
+  border-radius: 10px;
+  text-align: center;
+  color: #BBBBC0;
+  background: #1E1E2E;
+  box-shadow: 0 0 150px 0 rgba(239, 241, 245, 0.11);
+}
+
+.popup-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #30303F;
+  color: #BBBBC0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.popup-content button:hover {
+  background-color: #CAA6F9;
+  color: #1E1E2E;
+  transform: scale(1.05);
+}
+    .timer {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #BBBBC0;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
