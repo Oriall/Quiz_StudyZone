@@ -45,16 +45,20 @@ function handleAnswer(button, selectedOption) {
 // ===== Replace this with your Gemini API integration =====
 async function fetchQuestionFromGemini() {
   const prompt = `
-Hãy tạo một câu hỏi trắc nghiệm từ vựng tiếng Anh mà người bản địa hay dùng như sau(tránh bị lặp lại từ, luôn nghĩ ra các từ mới):
-- Một từ tiếng Anh bất kỳ.
-- 4 lựa chọn nghĩa tiếng Việt, trong đó 1 là đúng.
-- Trả về JSON như sau:
+Hãy tạo một câu hỏi trắc nghiệm về kiến thức Tin học lớp 12 (Việt Nam), bao gồm các chủ đề như: Cơ sở dữ liệu, hệ quản trị cơ sở dữ liệu, Python, C+++, thuật toán, Html, web, mạng,...
+
+Yêu cầu:
+- Nội dung câu hỏi liên quan trực tiếp đến kiến thức Tin học lớp 12.
+- Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
+- Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
+- Trả về kết quả dưới dạng JSON như sau:
 {
-  "question": "Từ: apple nghĩa là gì?",
-  "options": ["Táo", "Cam", "Chuối", "Nho"],
-  "answer": "Táo"
+  "question": "Câu hỏi ở đây?",
+  "options": ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
+  "answer": "Lựa chọn đúng"
 }
 `;
+
 
   // Replace YOUR_API_KEY_HERE with your actual Gemini API key and ensure the API is enabled in your Google Cloud project.
   const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyB856seywOwGsTCEguKYw3vfRttPiYlGJA", {

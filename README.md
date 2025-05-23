@@ -1,6 +1,6 @@
 # 📚 Vocabulary Quiz App
 
-Một ứng dụng web nhỏ gọn giúp người học tiếng Anh luyện tập từ vựng theo dạng **trắc nghiệm**, với dữ liệu sinh động được **tự động tạo từ Gemini API** (AI của Google).
+Một ứng dụng web nhỏ gọn giúp người học Tin Học luyện tập kiến thức theo dạng **trắc nghiệm**, với dữ liệu sinh động được **tự động tạo từ Gemini API** (AI của Google).
 
 ![Preview](./img/anh_minh_hoa.png)
 
@@ -8,7 +8,7 @@ Một ứng dụng web nhỏ gọn giúp người học tiếng Anh luyện tậ
 
 ## 🚀 Tính năng
 
-- ✅ Tự động sinh câu hỏi từ vựng tiếng Anh kèm 4 lựa chọn.
+- ✅ Tự động sinh câu hỏi kiến thức Tin Học kèm 4 lựa chọn.
 - ✅ Người dùng chọn đáp án bằng button.
 - ✅ Đúng => xanh 🍀 | Sai => đỏ ❌, hiện đáp án đúng.
 - ✅ Giao diện đơn giản, dễ dùng, hỗ trợ trên mọi thiết bị.
@@ -43,7 +43,7 @@ Một ứng dụng web nhỏ gọn giúp người học tiếng Anh luyện tậ
 ## 🧠 Cách hoạt động
 
 1. Nhấn **"Next Question"** để gọi API Gemini tạo một câu hỏi.
-2. Hệ thống hiển thị từ vựng và 4 nghĩa tiếng Việt.
+2. Hệ thống hiển thị kiến thức và 4 nghĩa tiếng Việt.
 3. Người dùng chọn đáp án:
    - Nếu đúng: nút chuyển màu **xanh**.
    - Nếu sai: nút sai chuyển **đỏ**, nút đúng chuyển **xanh**.
