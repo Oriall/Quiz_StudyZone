@@ -4,6 +4,7 @@ const popup = document.getElementById("subject-popup");
 const timerEl = document.getElementById("timer");
 
 let correctAnswer = "";
+let explanationText = "";
 let selectedSubject = "";
 let timerInterval = null;
 
@@ -45,6 +46,7 @@ function handleTimeout() {
   });
 
   questionEl.textContent = "Hết giờ! Đáp án đúng đã được hiển thị.";
+  showExplanation();
 }
 
 async function loadQuestion() {
@@ -61,6 +63,7 @@ async function loadQuestion() {
 
   questionEl.textContent = questionData.question;
   correctAnswer = questionData.answer;
+  explanationText = questionData.explanation || "Không có giải thích.";
 
   questionData.options.forEach(option => {
     const btn = document.createElement("button");
@@ -94,6 +97,8 @@ function handleAnswer(button, selectedOption) {
       }
     });
   }
+
+  showExplanation();
 }
 
 async function fetchQuestionFromGemini() {
@@ -104,55 +109,64 @@ async function fetchQuestionFromGemini() {
 
 Yêu cầu:
 - Nội dung câu hỏi liên quan trực tiếp đến kiến thức Tin học lớp 12.
+- Ngẫu nhiên chọn một trong các chủ đề trên.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Trả về kế quả dưới dạng JSON như sau:
+- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
+- Trả về kết quả dưới dạng JSON như sau:
 {
   "question": "Câu hỏi ở đây?",
   "options": ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
-  "answer": "Lựa chọn đúng"
+  "answer": "Lựa chọn đúng",
+  "explanation": "Giải thích đáp án đúng"
 }`;
   } else if (selectedSubject === "english") {
     prompt = `Hãy tạo một câu hỏi trắc nghiệm về từ vựng tiếng anh hằng ngày 
 
 Yêu cầu:
 - Nội dung câu hỏi liên quan trực tiếp đến từ vựng tiếng anh 
+- Ngẫu nhiên chọn một trong các chủ đề.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Trả về kế quả dưới dạng JSON như sau:
+- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
+- Trả về kết quả dưới dạng JSON như sau:
 {
   "question": "Câu hỏi ở đây?",
   "options": ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
-  "answer": "Lựa chọn đúng"
+  "answer": "Lựa chọn đúng",
+  "explanation": "Giải thích đáp án đúng"
 }`;
-  }
-  else if (selectedSubject === "math") {
-    prompt = `Hãy tạo một câu hỏi trắc nghiệm về kiến thức Toán học lớp 12 (Việt Nam) theo chương trình mới 2018, bao gồm các chủ đề như: Đạo hàm, Toán thực tế liên quan đến đạo hàm nguyên hàm ((tập trung chính)), Nguyên hàm, Tích phân, Bài toán lãi suất,...
+  } else if (selectedSubject === "math") {
+    prompt = `Hãy tạo một câu hỏi trắc nghiệm về kiến thức Toán học lớp 12 (Việt Nam) theo chương trình mới 2018, bao gồm các chủ đề như: Đạo hàm, Toán thực tế liên quan đến đạo hàm nguyên hàm, Nguyên hàm, Tích phân, Bài toán lãi suất,...
 
 Yêu cầu:
-- Nội dung câu hỏi liên quan trực tiếp đến kiến thức Toán học lớp 12 theo chương trình mới 2018.
+- Nội dung câu hỏi liên quan trực tiếp đến kiến thức Toán học lớp 12.
+- Ngẫu nhiên chọn một trong các chủ đề theo chương trình mới 2018.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Trả về kế quả dưới dạng JSON như sau:
+- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
+- Trả về kết quả dưới dạng JSON như sau:
 {
   "question": "Câu hỏi ở đây?",
   "options": ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
-  "answer": "Lựa chọn đúng"
+  "answer": "Lựa chọn đúng",
+  "explanation": "Giải thích đáp án đúng"
 }`;
-  }
-  else if (selectedSubject === "physics") {
-    prompt = `Hãy tạo một câu hỏi trắc nghiệm về kiến thức Vật lý lớp 12 (Việt Nam) theo chương trình mới 2018, bao gồm 4 chủ đề chính như: Vật lý nhiệt,Khí lí tưởng, Từ trường, hạt nhân nguyên tử.
-    
+  } else if (selectedSubject === "physics") {
+    prompt = `Hãy tạo một câu hỏi trắc nghiệm về kiến thức Vật lý lớp 12 (Việt Nam) theo chương trình mới 2018, bao gồm 4 chủ đề chính như: Vật lý nhiệt, Khí lí tưởng, Từ trường, hạt nhân nguyên tử.
 
 Yêu cầu:
-- Nội dung câu hỏi liên quan trực tiếp đến kiến thức Vật Lý lớp 12 theo chương trình mới 2018.
+- Nội dung câu hỏi liên quan trực tiếp đến kiến thức Vật lý lớp 12 theo chương trình mới 2018.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
+- Ngẫu nhiên chọn một trong các chủ đề trên.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Trả về kế quả dưới dạng JSON như sau:
+- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
+- Trả về kết quả dưới dạng JSON như sau:
 {
   "question": "Câu hỏi ở đây?",
   "options": ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
-  "answer": "Lựa chọn đúng"
+  "answer": "Lựa chọn đúng",
+  "explanation": "Giải thích đáp án đúng"
 }`;
   }
 
@@ -179,4 +193,13 @@ Yêu cầu:
     console.error("JSON parse error:", e, "Raw response:", textResponse);
     return null;
   }
+}
+
+function showExplanation() {
+  document.getElementById("explanation-text").textContent = explanationText;
+  document.getElementById("explanation-popup").style.display = "block";
+}
+
+function closeExplanation() {
+  document.getElementById("explanation-popup").style.display = "none";
 }
