@@ -131,6 +131,7 @@ Yêu cầu:
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
 - Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.(không giải thích thêm)
 - Câu trả lời đưa ra tuân thủ hoàn toàn theo định dạng JSON và không giải thích gì thêm.
+- Giải thích bằng tiếng Việt.
 - Trả về kết quả dưới dạng JSON như sau:
 {
   "question": "Câu hỏi ở đây?",
