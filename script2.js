@@ -8,12 +8,29 @@ let explanationText = "";
 let selectedSubject = "";
 let timerInterval = null;
 
+// --- Quản lý lịch sử câu hỏi ---
+let questionHistory = JSON.parse(localStorage.getItem("questionHistory") || "[]");
+
+function saveQuestionToHistory(questionText) {
+  if (!questionHistory.includes(questionText)) {
+    questionHistory.push(questionText);
+    localStorage.setItem("questionHistory", JSON.stringify(questionHistory.slice(-50)));
+  }
+}
+
+function getAvoidListPrompt() {
+  if (questionHistory.length === 0) return "";
+  return `\nTránh lặp lại các câu hỏi sau:\n- ${questionHistory.join('\n- ')}\n`;
+}
+
+// --- Chọn môn học ---
 function selectSubject(subject) {
   selectedSubject = subject;
   popup.style.display = "none";
   loadQuestion();
 }
 
+// --- Đếm giờ ---
 function startTimer(duration) {
   clearInterval(timerInterval);
   let timeLeft = duration;
@@ -49,6 +66,7 @@ function handleTimeout() {
   showExplanation();
 }
 
+// --- Load câu hỏi ---
 async function loadQuestion() {
   questionEl.textContent = "Loading question...";
   optionsEl.innerHTML = "";
@@ -56,10 +74,13 @@ async function loadQuestion() {
 
   const questionData = await fetchQuestionFromGemini();
 
-  if (!questionData) {
+  if (!questionData || !questionData.question) {
     questionEl.textContent = "Failed to load question.";
     return;
   }
+
+  // Lưu vào lịch sử
+  saveQuestionToHistory(questionData.question);
 
   questionEl.textContent = questionData.question;
   correctAnswer = questionData.answer;
@@ -83,6 +104,7 @@ async function loadQuestion() {
   }
 }
 
+// --- Xử lý khi người dùng chọn đáp án ---
 function handleAnswer(button, selectedOption) {
   const buttons = document.querySelectorAll(".option-btn");
   buttons.forEach(btn => btn.disabled = true);
@@ -101,12 +123,14 @@ function handleAnswer(button, selectedOption) {
   showExplanation();
 }
 
+// --- Gọi Gemini API ---
 async function fetchQuestionFromGemini() {
+  const avoidList = getAvoidListPrompt();
   let prompt = "";
 
   if (selectedSubject === "it") {
     prompt = `Hãy tạo một câu hỏi trắc nghiệm về kiến thức Tin học lớp 12 (Việt Nam), bao gồm các chủ đề như: Cơ sở dữ liệu, hệ quản trị cơ sở dữ liệu, Python, C+++, thuật toán, Html, web, mạng,...
-
+${avoidList}
 Yêu cầu:
 - Nội dung câu hỏi liên quan trực tiếp đến kiến thức Tin học lớp 12.
 - Ngẫu nhiên chọn một trong các chủ đề trên.
@@ -122,10 +146,10 @@ Yêu cầu:
   "explanation": "Giải thích đáp án đúng"
 }`;
   } else if (selectedSubject === "english") {
-    prompt = `Hãy tạo một câu hỏi trắc nghiệm về từ vựng tiếng anh theo các chủ đề như: Technology, Environment, Health, Education, Culture, Travel, Food, Sports, Business, và các chủ đề khác liên quan đến từ vựng tiếng anh.
-
+    prompt = `Hãy tạo một câu hỏi trắc nghiệm về từ vựng tiếng anh theo các chủ đề như: Technology, Environment, Health, Education, Culture, Travel, Food, Sports, Business,...
+${avoidList}
 Yêu cầu:
-- Nội dung câu hỏi liên quan trực tiếp đến từ vựng tiếng anh 
+- Nội dung câu hỏi liên quan trực tiếp đến từ vựng tiếng anh.
 - Ngẫu nhiên chọn một trong các chủ đề.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
@@ -140,39 +164,27 @@ Yêu cầu:
   "explanation": "Giải thích đáp án đúng"
 }`;
   } else if (selectedSubject === "math") {
-    prompt = `Hãy tạo một câu hỏi trắc nghiệm về kiến thức Toán học lớp 12 (Việt Nam) theo chương trình mới 2018, bao gồm các chủ đề như: Đạo hàm, Toán thực tế liên quan đến đạo hàm nguyên hàm, Nguyên hàm, Tích phân, Bài toán lãi suất,...
-
+    prompt = `Hãy tạo một câu hỏi trắc nghiệm về kiến thức Toán học lớp 12 (Việt Nam) theo chương trình mới 2018,...
+${avoidList}
 Yêu cầu:
 - Nội dung câu hỏi liên quan trực tiếp đến kiến thức Toán học lớp 12.
-- Ngẫu nhiên chọn một trong các chủ đề theo chương trình mới 2018.
+- Ngẫu nhiên chọn một trong các chủ đề.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.(không giải thích thêm)
-- Câu trả lời đưa ra tuân thủ hoàn toàn theo định dạng JSON và không giải thích gì thêm.
-- Trả về kết quả dưới dạng JSON như sau:
-{
-  "question": "Câu hỏi ở đây?",
-  "options": ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
-  "answer": "Lựa chọn đúng",
-  "explanation": "Giải thích đáp án đúng"
-}`;
+- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
+- Trả về JSON:
+{ "question": "...", "options": [...], "answer": "...", "explanation": "..." }`;
   } else if (selectedSubject === "physics") {
-    prompt = `Hãy tạo một câu hỏi trắc nghiệm về kiến thức Vật lý lớp 12 (Việt Nam) theo chương trình mới 2018, bao gồm 4 chủ đề chính như: Vật lý nhiệt, Khí lí tưởng, Từ trường, hạt nhân nguyên tử.
-
+    prompt = `Hãy tạo một câu hỏi trắc nghiệm về kiến thức Vật lý lớp 12 (Việt Nam) theo chương trình mới 2018,...
+${avoidList}
 Yêu cầu:
-- Nội dung câu hỏi liên quan trực tiếp đến kiến thức Vật lý lớp 12 theo chương trình mới 2018.
-- Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
-- Ngẫu nhiên chọn một trong các chủ đề trên.
-- Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.(không giải thích thêm)
-- Câu trả lời đưa ra tuân thủ hoàn toàn theo định dạng JSON và không giải thích gì thêm.
-- Trả về kết quả dưới dạng JSON như sau:
-{
-  "question": "Câu hỏi ở đây?",
-  "options": ["Lựa chọn A", "Lựa chọn B", "Lựa chọn C", "Lựa chọn D"],
-  "answer": "Lựa chọn đúng",
-  "explanation": "Giải thích đáp án đúng"
-}`;
+- Nội dung câu hỏi liên quan trực tiếp đến kiến thức Vật lý lớp 12.
+- Ngẫu nhiên chọn một trong các chủ đề.
+- Tránh lặp lại câu hỏi.
+- Câu hỏi có 4 lựa chọn, 1 đúng.
+- Giải thích 1-5 câu.
+- Trả về JSON:
+{ "question": "...", "options": [...], "answer": "...", "explanation": "..." }`;
   }
 
   const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyB856seywOwGsTCEguKYw3vfRttPiYlGJA", {
