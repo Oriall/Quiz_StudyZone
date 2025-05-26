@@ -77,7 +77,7 @@ async function loadQuestion() {
   });
 
   if (selectedSubject === "it" || selectedSubject === "english") {
-    startTimer(5);
+    startTimer(10);
   } else {
     startTimer(60);
   }
@@ -112,7 +112,8 @@ Yêu cầu:
 - Ngẫu nhiên chọn một trong các chủ đề trên.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
+- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.(không giải thích thêm)
+- Câu trả lời đưa ra tuân thủ hoàn toàn theo định dạng JSON và không giải thích gì thêm.
 - Trả về kết quả dưới dạng JSON như sau:
 {
   "question": "Câu hỏi ở đây?",
@@ -121,14 +122,15 @@ Yêu cầu:
   "explanation": "Giải thích đáp án đúng"
 }`;
   } else if (selectedSubject === "english") {
-    prompt = `Hãy tạo một câu hỏi trắc nghiệm về từ vựng tiếng anh hằng ngày 
+    prompt = `Hãy tạo một câu hỏi trắc nghiệm về từ vựng tiếng anh theo các chủ đề như: Technology, Environment, Health, Education, Culture, Travel, Food, Sports, Business, và các chủ đề khác liên quan đến từ vựng tiếng anh.
 
 Yêu cầu:
 - Nội dung câu hỏi liên quan trực tiếp đến từ vựng tiếng anh 
 - Ngẫu nhiên chọn một trong các chủ đề.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
+- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.(không giải thích thêm)
+- Câu trả lời đưa ra tuân thủ hoàn toàn theo định dạng JSON và không giải thích gì thêm.
 - Trả về kết quả dưới dạng JSON như sau:
 {
   "question": "Câu hỏi ở đây?",
@@ -144,7 +146,8 @@ Yêu cầu:
 - Ngẫu nhiên chọn một trong các chủ đề theo chương trình mới 2018.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
+- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.(không giải thích thêm)
+- Câu trả lời đưa ra tuân thủ hoàn toàn theo định dạng JSON và không giải thích gì thêm.
 - Trả về kết quả dưới dạng JSON như sau:
 {
   "question": "Câu hỏi ở đây?",
@@ -160,7 +163,8 @@ Yêu cầu:
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Ngẫu nhiên chọn một trong các chủ đề trên.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
+- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.(không giải thích thêm)
+- Câu trả lời đưa ra tuân thủ hoàn toàn theo định dạng JSON và không giải thích gì thêm.
 - Trả về kết quả dưới dạng JSON như sau:
 {
   "question": "Câu hỏi ở đây?",
