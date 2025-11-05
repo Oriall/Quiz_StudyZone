@@ -1,7 +1,7 @@
 const JSONBIN_CONFIG = {
-  binId: "690bc92143b1c97be99b7118",  // Thay bằng Bin ID của bạn
-  accessKey: "$2a$10$VPPTkf.5nFq2KMPqzYP5fOIJ6s./HJXV7YCLPBBZJYSEkmLm.KHQW", // X-Access-Key từ JSONBin
-  masterKey: "$2a$10$0Li0FCP0GlRmju3r2JAjZeE3VAf5g/l7NisjldP1zXzOAKwSFFQs6"  // X-Master-Key (nếu cần write)
+  binId: "690bce3eae596e708f472b94",  // Thay bằng Bin ID của bạn
+  accessKey: "$2a$10$0Li0FCP0GlRmju3r2JAjZeE3VAf5g/l7NisjldP1zXzOAKwSFFQs6", // X-Access-Key từ JSONBin
+  masterKey: "$2a$10$ipP0.Em3T.SRQaousDsWQeAERtc5Pt9pNCGOYdewJMOYErROd32Iu"  // X-Master-Key (nếu cần write)
 };
 
 // ==================== LEADERBOARD MANAGER ====================

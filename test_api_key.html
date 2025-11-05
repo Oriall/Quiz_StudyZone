@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSONBin API Key Tester</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: monospace;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.02);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .result.success {
+      background: #d4edda;
+      border: 2px solid #28a745;
+      color: #155724;
+    }
+
+    .result.error {
+      background: #f8d7da;
+      border: 2px solid #dc3545;
+      color: #721c24;
+    }
+
+    .result h3 {
+      margin-bottom: 10px;
+    }
+
+    .result pre {
+      background: rgba(0, 0, 0, 0.05);
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .hint {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+
+    .hint strong {
+      color: #856404;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔑 JSONBin API Key Tester</h1>
+    <p class="subtitle">Test xem API Key của bạn có hoạt động không</p>
+
+    <div class="hint">
+      <strong>💡 Hướng dẫn:</strong><br>
+      1. Vào <a href="https://jsonbin.io/api-keys" target="_blank">jsonbin.io/api-keys</a><br>
+      2. Copy Access Key (dạng: $2b$10$...)<br>
+      3. Paste vào form dưới và test
+    </div>
+
+    <div class="input-group">
+      <label for="binId">Bin ID:</label>
+      <input 
+        type="text" 
+        id="binId" 
+        placeholder="690bc92143b1c97be99b7118"
+        value="690bc92143b1c97be99b7118"
+      />
+    </div>
+
+    <div class="input-group">
+      <label for="accessKey">Access Key:</label>
+      <input 
+        type="text" 
+        id="accessKey" 
+        placeholder="$2b$10$..."
+      />
+    </div>
+
+    <button id="testBtn" onclick="testConnection()">
+      🚀 Test Connection
+    </button>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    async function testConnection() {
+      const binId = document.getElementById('binId').value.trim();
+      const accessKey = document.getElementById('accessKey').value.trim();
+      const resultDiv = document.getElementById('result');
+      const testBtn = document.getElementById('testBtn');
+
+      // Reset
+      resultDiv.style.display = 'none';
+      resultDiv.className = 'result';
+
+      // Validate
+      if (!binId || !accessKey) {
+        showError('Vui lòng điền đầy đủ Bin ID và Access Key!');
+        return;
+      }
+
+      if (!accessKey.startsWith('$2')) {
+        showError('Access Key phải bắt đầu bằng $2a$10$ hoặc $2b$10$');
+        return;
+      }
+
+      // Test
+      testBtn.disabled = true;
+      testBtn.textContent = '⏳ Đang test...';
+
+      try {
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+          method: 'GET',
+          headers: {
+            'X-Access-Key': accessKey
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          showSuccess(data);
+        } else {
+          const error = await response.text();
+          showError(`HTTP ${response.status}: ${error}`);
+        }
+      } catch (error) {
+        showError(`Network Error: ${error.message}`);
+      } finally {
+        testBtn.disabled = false;
+        testBtn.textContent = '🚀 Test Connection';
+      }
+    }
+
+    function showSuccess(data) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.className = 'result success';
+      resultDiv.innerHTML = `
+        <h3>✅ Kết nối thành công!</h3>
+        <p>API Key của bạn hoạt động tốt. Bạn có thể sử dụng trong code.</p>
+        <pre>${JSON.stringify(data, null, 2)}</pre>
+        <p style="margin-top: 15px;">
+          <strong>📋 Sao chép config vào code:</strong>
+        </p>
+        <pre>const JSONBIN_CONFIG = {
+  binId: "${document.getElementById('binId').value.trim()}",
+  accessKey: "${document.getElementById('accessKey').value.trim()}",
+  masterKey: "${document.getElementById('accessKey').value.trim()}"
+};</pre>
+      `;
+      resultDiv.style.display = 'block';
+    }
+
+    function showError(message) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.className = 'result error';
+      resultDiv.innerHTML = `
+        <h3>❌ Lỗi kết nối</h3>
+        <p>${message}</p>
+        <p style="margin-top: 15px;"><strong>Cách khắc phục:</strong></p>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+          <li>Kiểm tra lại Access Key có đầy đủ không (thường 60-70 ký tự)</li>
+          <li>Đảm bảo không có khoảng trắng thừa đầu/cuối</li>
+          <li>Thử tạo Access Key mới tại <a href="https://jsonbin.io/api-keys" target="_blank">jsonbin.io/api-keys</a></li>
+          <li>Kiểm tra Bin ID có đúng không</li>
+        </ul>
+      `;
+      resultDiv.style.display = 'block';
+    }
+
+    // Auto test khi nhấn Enter
+    document.getElementById('accessKey').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        testConnection();
+      }
+    });
+  </script>
+</body>
+</html>
