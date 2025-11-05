@@ -1,0 +1,187 @@
+1	わたし	私	Tôi
+2	わたしたち	私たち	Chúng tôi
+3	あなた	 	Anh/chị, ông/bà, bạn (ngôi thứ 2 số ít)
+4	あのひと	あの人	Người kia
+5	あのかた	あの方	Vị này Lịch sự tương đương với あのひと
+6	みなさん	 	Các bạn, các anh, các chị, mọi người
+7	～さん	 	Anh ～, Chị ～, Ông ～, Bà ～ (cách gọi người khác 1 cách lịch sự)
+8	～ちゃん	 	Bé ( dùng cho nữ) hoặc gọi thân mật cho trẻ con ( cả nam lẫn nữ)
+9	～くん	 	Bé (dùng cho nam) hoặc gọi thân mật
+10	～じん	～人	Người nước ～
+11	せんせい	先生	Giáo viên
+12	きょうし	教師	Giáo viên ( dùng để nói đến nghề nghiệp)
+13	がくせい	学生	học sinh, sinh viên
+14	かいしゃいん	会社員	nhân viên công ty
+15	～しゃいん	社員	nhân viên công ty ～
+16	ぎんこういん	銀行員	nhân viên ngân hàng
+17	いしゃ	医者	bác sĩ
+18	けんきゅうしゃ	研究者	 nhà nghiên cứu
+19	エンジニア	 	kỹ sư
+20	だいがく	大学	trường đại học
+21	びょういん	病院	bệnh viện
+22	でんき	電気	Điện, đèn điện
+23	だれ（どなた）	誰	ai (ngài nào, vị nào)
+24	―さい	～歳	tuổi
+25	なんさい	何歳	mấy tuổi
+26	はい	 	vâng
+27	いいえ	 	không
+28	しつれいですが	失礼ですが	Xin lỗi ( khi muốn nhờ ai việc gì đó)
+29	おなまえは？	お名前は	Bạn tên gì?
+30	はじめまして。	初めて	chào lần đầu gặp nhau
+31	どうぞよろしく[おねがいします]。	どうぞよろしく「お願いします」。	rất hân hạnh được làm quen
+32	こちらは～さんです。	 	đây là ngài
+33	～からきました。	～から来ました	đến từ ～
+34	アメリカ	 	Mỹ
+35	イギリス	 	Anh
+36	インド	 	Ấn Độ
+37	インドネシア	 	Indonesia
+38	かんこく	韓国	Hàn quốc
+39	タイ	 	Thái Lan
+40	ちゅうごく	中国	Trung Quốc
+41	ドイツ	 	Đức
+42	にほん	日本	Nhật
+43	フランス	 	Pháp
+44	ブラジル	 	Brazil
+
+Bài 2:
+1	これ	 	Cái này, đây (vật ở gần người nói)
+2	それ	 	Cái đó, đó (vật ở gần người nghe)
+3	あれ	 	Cái kia, kia (vật ở xa cả người nói và người nghe)
+4	この~	 	~ này
+5	その~	 	~ đó
+6	あの~	 	~ kia
+7	ほん	本	Sách
+8	じしょ	辞書	Từ điển
+9	ざっし	雑誌	Tạp chí
+10	しんぶん	新聞	Báo
+11	ノート	 	Vở
+12	てちょう	手帳	Sổ tay
+13	めいし	名詞	Danh thiếp
+14	カード	 	Thẻ, cạc
+15	テレホンカード	 	Thẻ điện thoại
+16	えんぴつ	鉛筆	Bút chì
+17	ボールペン	 	Bút bi
+18	シャープペンシル	 	Bút chì kim, bút chì bấm
+19	かぎ	 	Chìa khóa
+20	とけい	時計	Đồng hồ
+21	かさ	傘	ô, dù
+22	かばん	 	Cặp sách, túi sách
+23	[カセット] テーブ	 	Băng [cát-xét]
+24	テープレコーダー	 	Máy ghi âm
+25	テレビ	 	Tivi
+26	ラジオ	 	Radio
+27	カメラ	 	Máy ảnh
+28	コンピュータ	 	Máy vi tính
+29	じどうしゃ	自動車	Ô tô, xe hơi
+30	つくえ	机	Cái bàn
+31	いす	 	Ghế
+32	チョコレート	 	Chocolate
+33	コーヒー	 	Cà phê
+34	えいご	英語	Tiếng Anh
+35	にほんご	日本語	Tiếng Nhật
+36	∼ご	∼語	Tiếng~
+37	なん	何	Cái gì
+38	そう	 	Đúng vậy
+39	ちがいます。	違います。	Nhầm rồi
+40	そうですか。	 	Thế à?
+41	あのう	 	 À…(được sử dụng để thể hiện sự do dự)
+42	ほんのきもちです	ほんの気持ちです	Đây là chút quà nhỏ của tôi
+43	どうぞ	 	Xin mời
+44	どうも	 	Cảm ơn
+45	[どうも] ありがとう[ございます]	 	Cảm ơn nhiều
+46	これから おせわになります	これから お世話になります	Từ này mong được anh/chị giúp đỡ
+47	こちらこそ よろしく	 	Chính tôi mới mong được anh/chị giúp đỡ
+
+Bài 3:
+1	ここ	 	chỗ này, đây
+2	そこ	 	chỗ đó, đó
+3	あそこ	 	chỗ kia, kia
+4	どこ	 	chỗ nào, đâu
+5	こちら	 	phía này, đằng này, chỗ này, đây (là cách nói lịch sự của ここ)
+6	そちら	 	phía đó, đằng đó, chỗ đó, đó (là cách nói lịch sự của そこ)
+7	あちら	 	phía kia, đằng kia, chỗ kia, kia (cách nói lịch sự của あそこ)
+8	どちら	 	phía nào, đằng nào, chỗ nào, đâu (cách nói lịch sự của どこ )
+9	きょうしつ	教室	lớp học, phòng học
+10	しょくどう	食堂	nhà ăn
+11	じむしょ	事務所	văn phòng
+12	かいぎしつ	会議室	phòng họp
+13	うけつけ	受付	bộ phận tiếp tân, phòng thường trực, lễ tân
+14	ロビー	 	hành lang, đại sảnh
+15	へや	部屋	căn phòng
+16	トイレ（おてあらい）	(お手洗い）	nhà vệ sinh, phòng vệ sinh, toa-lét
+17	かいだん	階段	cầu thang
+18	エレベーター	 	thang máy
+19	エスカレーター	 	thang cuốn
+20	[お]くに	[お]国	đất nước
+21	かいしゃ	会社	công ty
+22	うち	 	nhà
+23	でんわ	電話	máy điện thoại, điện thoại
+24	くつ	靴	giày
+25	ネクタイ	 	cà vạt
+26	ワイン	 	rượu vang
+27	たばこ	 	thuốc lá
+28	うりば	売り場	quầy bán (trong một cửa hàng bách hóa)
+29	ちか	地下	tầng hầm, dưới mặt đất
+30	―かい（－がい）	－階	tầng thứ –
+31	なんがい	何階	tầng mấy
+32	―えん	―円	yên
+33	いくら	 	bao nhiêu tiền
+34	ひゃく	百	trăm
+35	せん	千	nghìn
+36	まん	万	mười nghìn, vạn
+37	すみません	 	Xin lỗi
+38	～でございます	 	(cách nói lịch sự của 「です」)
+39	みせてください	[～を]見せてください	cho tôi xem [~]
+40	じゃ	 	Thế thì, vậy thì
+41	[～を]ください	 	cho tôi [~]
+42	しんおおさか	新大阪	tên một nhà ga ở Osaka
+43	イタリア	 	Ý
+44	スイス	 	Thụy Sĩ
+
+Bài 4:
+
+1	おきます	 	thức dậy
+2	ねます	寝ます	ngủ
+3	はたらきます	働きます	làm việc
+4	やすみます	休みます	nghỉ ngơi
+5	べんきょうします	勉強します	học tập
+6	おわります	終わります	kết thúc
+7	デパート	 	cửa hàng bách hóa
+8	ぎんこう	銀行	ngân hàng
+9	ゆうびんきょく	郵便局	bưu điện
+10	としょかん	図書館	thư viện
+11	びじゅつかん	美術館	viện bảo tàng
+12	でんわばんごう	電話番号	số điện thoại
+13	なんばん	何番	số mấy
+14	いま	今	bây giờ
+15	～じ	～時	~giờ
+16	～ふん / ～ぷん	～分	～phút
+17	はん	半	phân nửa
+18	なんじ	何時	mấy giờ
+19	なんぷん	何分	mấy phút
+20	ごぜん	午前	sáng (AM: trước 12 giờ)
+21	ごご	午後	chiều (PM: sau 12 giờ)
+22	あさ	朝	sáng
+23	ひる	昼	trưa
+24	ばん	晩	tối
+25	よる	夜	tối
+26	おととい	 	ngày hôm kia
+27	きのう	 	ngày hôm qua
+28	きょう	今日	hôm nay
+29	あした	明日	ngày mai
+30	あさって	 	ngày mốt
+31	けさ	今朝	sáng nay
+32	こんばん	 	tối nay
+33	ゆうべ	 	tối hôm qua
+34	やすみ	休み	nghỉ ngơi (danh từ)
+35	ひるやすみ	昼休み	nghỉ trưa
+36	まいあさ	毎朝	mỗi sáng
+37	まいばん	毎晩	mỗi tối
+38	まいにち	毎日	mỗi ngày
+39	ペキン	 	Bắc Kinh
+40	バンコク	 	Bangkok
+41	ロンドン	 	Luân Đôn
+42	ロサンゼルス	 	Los Angeles
+43	たいへんですね	大変ですね	vất vả nhỉ
+44	ばんごうあんない	 	dịch vụ 116 (hỏi số điện thoại)
+45	おといあわせ	 	(số điện thoại) bạn muốn biết / hỏi là
