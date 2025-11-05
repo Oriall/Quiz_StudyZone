@@ -195,6 +195,7 @@ const optionsEl = document.getElementById("options");
 const popup = document.getElementById("subject-popup");
 const timerEl = document.getElementById("timer");
 const pointEl = document.querySelector(".point span");
+const streakEl = document.querySelector(".point2 span");
 
 // Elements cho phần tự luận
 const essayContainer = document.getElementById("essay-container");
@@ -211,6 +212,8 @@ let explanationText = "";
 let selectedSubject = "";
 let timerInterval = null;
 let userScore = 0;
+let userStreak = 0; // Biến lưu streak
+let maxStreak = 0; // Biến lưu streak cao nhất
 let currentQuestionType = ""; // "multiple-choice" hoặc "essay"
 
 // Quản lý lịch sử câu hỏi
@@ -241,7 +244,7 @@ function updateScore() {
 function addPoint() {
   userScore++;
   updateScore();
-  
+
   if (pointEl) {
     pointEl.style.transform = "scale(1.3)";
     pointEl.style.color = "#8f39ff";
@@ -254,11 +257,120 @@ function addPoint() {
     }, 300);
   }
 }
+// Cập nhật streak hiển thị
+function updateStreak() {
+  if (streakEl) {
+    streakEl.textContent = userStreak;
+  }
+}
 
+
+// Tăng streak khi trả lời đúng
+function increaseStreak() {
+  userStreak++;
+  if (userStreak > maxStreak) {
+    maxStreak = userStreak;
+  }
+  updateStreak();
+
+  // Hiệu ứng animation cho streak
+  if (streakEl) {
+    streakEl.style.transform = "scale(1.3)";
+    streakEl.style.color = "#FF6B35";
+    setTimeout(() => {
+      streakEl.style.transform = "scale(1)";
+      streakEl.style.color = "";
+    }, 300);
+  }
+
+  // Hiển thị thông báo milestone
+  if (userStreak === 5) {
+    showStreakMilestone("🔥 Streak x5! Bạn đang rất tốt!");
+  } else if (userStreak === 10) {
+    showStreakMilestone("🔥🔥 Streak x10! Xuất sắc!");
+  } else if (userStreak === 20) {
+    showStreakMilestone("🔥🔥🔥 Streak x20! Bạn là cao thủ!");
+  } else if (userStreak % 50 === 0 && userStreak > 0) {
+    showStreakMilestone(`🏆 Streak x${userStreak}! Không thể tin được!`);
+  }
+}
+
+// Reset streak khi trả lời sai
+function resetStreak() {
+  if (userStreak > 0) {
+    // Hiệu ứng mất streak
+    if (streakEl) {
+      streakEl.style.transform = "scale(0.8)";
+      streakEl.style.color = "#f44336";
+      setTimeout(() => {
+        userStreak = 0;
+        updateStreak();
+        streakEl.style.transform = "scale(1)";
+        streakEl.style.color = "";
+      }, 300);
+    } else {
+      userStreak = 0;
+      updateStreak();
+    }
+  }
+}
+
+// Hiển thị thông báo milestone
+function showStreakMilestone(message) {
+  const milestone = document.createElement("div");
+  milestone.className = "streak-milestone";
+  milestone.textContent = message;
+  milestone.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, #FF6B35, #F7931E);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 10000;
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.5);
+    animation: milestonePopup 2s ease-out forwards;
+  `;
+
+  document.body.appendChild(milestone);
+
+  setTimeout(() => {
+    milestone.remove();
+  }, 2000);
+}
+
+// Thêm CSS animation cho milestone
+const style = document.createElement("style");
+style.textContent = `
+  @keyframes milestonePopup {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 1;
+    }
+    70% {
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+`;
+document.head.appendChild(style);
 // Chọn môn học
 function selectSubject(subject) {
   selectedSubject = subject;
   popup.style.display = "none";
+  userStreak = 0;
+  updateStreak();
   loadQuestion();
 }
 
@@ -286,6 +398,7 @@ function updateTimerDisplay(seconds) {
 }
 
 function handleTimeout() {
+  resetStreak();
   if (currentQuestionType === "multiple-choice") {
     const buttons = document.querySelectorAll(".option-btn");
     buttons.forEach(btn => {
@@ -301,7 +414,7 @@ function handleTimeout() {
     essayFeedbackEl.textContent = `⏰ Hết giờ! Đáp án đúng là: ${correctAnswer}`;
     essayFeedbackEl.style.color = "#ff9800";
   }
-  
+
   showExplanation();
 }
 
@@ -311,7 +424,7 @@ function chooseQuestionType() {
   if (selectedSubject !== "japanese") {
     return "multiple-choice";
   }
-  
+
   // Ngẫu nhiên 50-50 giữa trắc nghiệm và tự luận
   return Math.random() < 0.5 ? "multiple-choice" : "essay";
 }
@@ -329,61 +442,61 @@ function showEssayContainer() {
 
 // ==================== TẠO CÂU HỎI TRẮC NGHIỆM ====================
 function generateJapaneseMultipleChoice() {
-  const availableWords = vocabularyData.filter(word => 
+  const availableWords = vocabularyData.filter(word =>
     !questionHistory.includes(word.hiragana)
   );
-  
+
   if (availableWords.length < 4) {
     questionHistory = [];
   }
-  
+
   const wordsToUse = availableWords.length >= 4 ? availableWords : vocabularyData;
   const correctWord = wordsToUse[Math.floor(Math.random() * wordsToUse.length)];
-  
+
   const wrongWords = [];
   while (wrongWords.length < 3) {
     const randomWord = vocabularyData[Math.floor(Math.random() * vocabularyData.length)];
-    if (randomWord.id !== correctWord.id && 
-        !wrongWords.find(w => w.id === randomWord.id)) {
+    if (randomWord.id !== correctWord.id &&
+      !wrongWords.find(w => w.id === randomWord.id)) {
       wrongWords.push(randomWord);
     }
   }
-  
+
   const allOptions = [correctWord, ...wrongWords]
     .sort(() => Math.random() - 0.5)
     .map(word => word.hiragana);
-  
+
   const questionData = {
     question: `"${correctWord.meaning}" trong tiếng Nhật là gì?`,
     options: allOptions,
     answer: correctWord.hiragana,
     explanation: `Đáp án đúng là "${correctWord.hiragana}"${correctWord.kanji ? ` (${correctWord.kanji})` : ''} có nghĩa là "${correctWord.meaning}".`
   };
-  
+
   saveQuestionToHistory(correctWord.hiragana);
   return questionData;
 }
 
 // ==================== TẠO CÂU HỎI TỰ LUẬN ====================
 function generateJapaneseEssay() {
-  const availableWords = vocabularyData.filter(word => 
+  const availableWords = vocabularyData.filter(word =>
     !questionHistory.includes(word.hiragana)
   );
-  
+
   if (availableWords.length === 0) {
     questionHistory = [];
   }
-  
+
   const wordsToUse = availableWords.length > 0 ? availableWords : vocabularyData;
   const correctWord = wordsToUse[Math.floor(Math.random() * wordsToUse.length)];
-  
+
   const questionData = {
     question: `Hãy viết từ "${correctWord.meaning}" bằng chữ Hiragana:`,
     answer: correctWord.hiragana,
     explanation: `Đáp án đúng là "${correctWord.hiragana}"${correctWord.kanji ? ` (${correctWord.kanji})` : ''} có nghĩa là "${correctWord.meaning}".`,
     kanji: correctWord.kanji
   };
-  
+
   saveQuestionToHistory(correctWord.hiragana);
   return questionData;
 }
@@ -405,18 +518,18 @@ async function loadQuestion() {
   if (selectedSubject === "japanese") {
     // Chọn loại câu hỏi ngẫu nhiên
     currentQuestionType = chooseQuestionType();
-    
+
     if (currentQuestionType === "essay") {
       showEssayContainer();
       questionData = generateJapaneseEssay();
-      
+
       essayQuestionEl.textContent = questionData.question;
       correctAnswer = questionData.answer;
       explanationText = questionData.explanation;
-      
+
       // Focus vào ô input
       setTimeout(() => essayInputEl.focus(), 100);
-      
+
       startTimer(30); // 30 giây cho câu tự luận
       return;
     } else {
@@ -473,8 +586,10 @@ function handleAnswer(button, selectedOption) {
   if (selectedOption === correctAnswer) {
     button.classList.add("correct");
     addPoint();
+    increaseStreak();
   } else {
     button.classList.add("incorrect");
+    resetStreak();
     buttons.forEach(btn => {
       if (btn.textContent === correctAnswer) {
         btn.classList.add("correct");
@@ -488,28 +603,31 @@ function handleAnswer(button, selectedOption) {
 // ==================== XỬ LÝ TỰ LUẬN ====================
 function submitEssayAnswer() {
   clearInterval(timerInterval);
-  
+
   const userAnswer = essayInputEl.value.trim();
   essayInputEl.disabled = true;
   essaySubmitBtn.disabled = true;
-  
+
   if (userAnswer === "") {
     essayFeedbackEl.textContent = "⚠️ Bạn chưa nhập câu trả lời!";
     essayFeedbackEl.style.color = "#ff9800";
+    resetStreak();
     showExplanation();
     return;
   }
-  
+
   // So sánh câu trả lời (không phân biệt hoa thường, loại bỏ khoảng trắng)
   if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
     essayFeedbackEl.textContent = "✅ Chính xác! Bạn đã trả lời đúng.";
     essayFeedbackEl.style.color = "#4CAF50";
     addPoint();
+    increaseStreak();
   } else {
     essayFeedbackEl.textContent = `❌ Sai rồi! Đáp án đúng là: ${correctAnswer}`;
     essayFeedbackEl.style.color = "#f44336";
+    resetStreak();
   }
-  
+
   showExplanation();
 }
 
@@ -614,3 +732,4 @@ function closeExplanation() {
 
 // Khởi tạo điểm ban đầu
 updateScore();
+updateStreak();

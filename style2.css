@@ -52,6 +52,7 @@ button.option-btn {
   color: #1E1E2E;
   transform: scale(1.05);
 }
+
 .option-btn:active {
   background-color: #caa6f9bc;
   color: #1E1E2E;
@@ -208,7 +209,8 @@ button.option-btn.incorrect {
   margin-bottom: 10px;
   text-align: center;
 }
-.point_box{
+
+.point_box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -219,15 +221,17 @@ button.option-btn.incorrect {
   padding: 10px 20px;
   border-radius: 0px 0px 0px 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  border: #CAA6F9 ;
+  border: #CAA6F9;
 
 }
-.point_box p{
+
+.point_box p {
   color: #BBBBC0;
   font-size: 26px;
   margin: 0;
 }
-.point_box .point span{
+
+.point_box .point span {
   font-weight: bold;
   margin-left: 5px;
   text-shadow: 0 0 5px #8f39ff;
@@ -272,6 +276,7 @@ button.option-btn.incorrect {
   color: #1E1E2E;
   transform: scale(1.05);
 }
+
 .essay-input-wrapper {
   display: flex;
   flex-direction: column;
@@ -299,4 +304,31 @@ button.option-btn.incorrect {
   border-radius: 5px;
   margin: 10px 0;
   min-height: 30px;
+}
+
+.point_box2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: linear-gradient(135deg, #FF6B35, #F7931E);
+  padding: 15px 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+
+}
+
+.point_box2 p {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.point_box2 .point2 span {
+  font-size: 24px;
+  display: inline-block;
+  transition: all 0.3s ease;
 }
