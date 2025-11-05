@@ -1,8 +1,16 @@
+// ==================== CẤU HÌNH JSONBIN ====================
+// HƯỚNG DẪN LẤY API KEY:
+// 1. Đăng nhập https://jsonbin.io
+// 2. Vào Dashboard → API Keys (góc trên bên phải)
+// 3. Copy "Access Key" (dạng: $2b$10$... hoặc $2a$10$...)
+// 4. QUAN TRỌNG: Phải copy TOÀN BỘ key, bao gồm cả ký tự đặc biệt
+
 const JSONBIN_CONFIG = {
   binId: "690bce3eae596e708f472b94",  // Thay bằng Bin ID của bạn
   accessKey: "$2a$10$0Li0FCP0GlRmju3r2JAjZeE3VAf5g/l7NisjldP1zXzOAKwSFFQs6", // X-Access-Key từ JSONBin
   masterKey: "$2a$10$ipP0.Em3T.SRQaousDsWQeAERtc5Pt9pNCGOYdewJMOYErROd32Iu"  // X-Master-Key (nếu cần write)
 };
+
 
 // ==================== LEADERBOARD MANAGER ====================
 class LeaderboardManager {
@@ -64,6 +72,8 @@ class LeaderboardManager {
 
   // Lưu streak mới vào leaderboard
   async saveStreak(playerName, streak, score) {
+    console.log(`💾 Đang lưu: ${playerName} - Streak: ${streak} - Score: ${score}`);
+    
     const data = await this.fetchLeaderboard();
     
     // Tìm người chơi trong danh sách
@@ -78,6 +88,7 @@ class LeaderboardManager {
         lastPlayed: new Date().toISOString(),
         gamesPlayed: 1
       });
+      console.log(`✅ Thêm người chơi mới: ${playerName}`);
     } else {
       // Cập nhật người chơi cũ
       const player = data.players[playerIndex];
@@ -85,13 +96,22 @@ class LeaderboardManager {
       player.totalScore += score;
       player.lastPlayed = new Date().toISOString();
       player.gamesPlayed = (player.gamesPlayed || 0) + 1;
+      console.log(`✅ Cập nhật người chơi: ${playerName}`);
     }
 
     // Sắp xếp theo maxStreak giảm dần, giữ top 50
     data.players.sort((a, b) => b.maxStreak - a.maxStreak);
     data.players = data.players.slice(0, 50);
 
-    await this.updateLeaderboard(data);
+    const success = await this.updateLeaderboard(data);
+    
+    if (success) {
+      console.log(`✅ Đã lưu thành công lên server!`);
+    } else {
+      console.error(`❌ Lỗi khi lưu lên server!`);
+    }
+    
+    return success;
   }
 
   // Lấy top N người chơi

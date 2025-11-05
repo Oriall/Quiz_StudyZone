@@ -529,3 +529,17 @@ button.option-btn.incorrect {
     opacity: 1;
   }
 }
+
+.save-btn {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: #1E1E2E;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+  transition: transform 0.2s;
+  z-index: 100;
+}
