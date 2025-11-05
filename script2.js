@@ -75,7 +75,7 @@ const vocabularyData = [
   { id: 70, hiragana: "ラジオ", kanji: "", meaning: "Radio" },
   { id: 71, hiragana: "カメラ", kanji: "", meaning: "Máy ảnh" },
   { id: 72, hiragana: "コンピュータ", kanji: "", meaning: "Máy vi tính" },
-  { id: 73, hiragana: "じどうしゃ", kanji: "自動車", meaning: "Ô tô, xe hơi" },
+  { id: 73, hiragana: "くるま", kanji: "自動車", meaning: "Ô tô, xe hơi" },
   { id: 74, hiragana: "つくえ", kanji: "机", meaning: "Cái bàn" },
   { id: 75, hiragana: "いす", kanji: "", meaning: "Ghế" },
   { id: 76, hiragana: "チョコレート", kanji: "", meaning: "Chocolate" },
@@ -194,12 +194,13 @@ const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
 const popup = document.getElementById("subject-popup");
 const timerEl = document.getElementById("timer");
+const pointEl = document.querySelector(".point span");
 
 let correctAnswer = "";
 let explanationText = "";
 let selectedSubject = "";
 let timerInterval = null;
-
+let userScore = 0; // Biến lưu điểm
 // Quản lý lịch sử câu hỏi (sử dụng biến trong bộ nhớ thay vì localStorage)
 let questionHistory = [];
 
@@ -350,7 +351,28 @@ async function loadQuestion() {
     startTimer(60);
   }
 }
+// Cập nhật điểm hiển thị
+function updateScore() {
+  if (pointEl) {
+    pointEl.textContent = userScore;
+  }
+}
 
+// Thêm điểm khi trả lời đúng
+function addPoint() {
+  userScore++;
+  updateScore();
+
+  // Hiệu ứng animation khi tăng điểm (optional)
+  if (pointEl) {
+    pointEl.style.transform = "scale(1.3)";
+    pointEl.style.color = "#8f39ff";
+    setTimeout(() => {
+      pointEl.style.transform = "scale(1)";
+      pointEl.style.color = "";
+    }, 300);
+  }
+}
 // Xử lý khi người dùng chọn đáp án
 function handleAnswer(button, selectedOption) {
   const buttons = document.querySelectorAll(".option-btn");
@@ -358,6 +380,7 @@ function handleAnswer(button, selectedOption) {
 
   if (selectedOption === correctAnswer) {
     button.classList.add("correct");
+    addPoint();
   } else {
     button.classList.add("incorrect");
     buttons.forEach(btn => {
@@ -454,3 +477,4 @@ function showExplanation() {
 function closeExplanation() {
   document.getElementById("explanation-popup").style.display = "none";
 }
+updateScore();
