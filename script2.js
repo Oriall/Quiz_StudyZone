@@ -240,6 +240,13 @@ function updateScore() {
   }
 }
 
+// Cập nhật streak hiển thị
+function updateStreak() {
+  if (streakEl) {
+    streakEl.textContent = userStreak;
+  }
+}
+
 // Thêm điểm khi trả lời đúng
 function addPoint() {
   userScore++;
@@ -257,13 +264,6 @@ function addPoint() {
     }, 300);
   }
 }
-// Cập nhật streak hiển thị
-function updateStreak() {
-  if (streakEl) {
-    streakEl.textContent = userStreak;
-  }
-}
-
 
 // Tăng streak khi trả lời đúng
 function increaseStreak() {
@@ -272,6 +272,12 @@ function increaseStreak() {
     maxStreak = userStreak;
   }
   updateStreak();
+
+
+  // Cập nhật stats cho leaderboard
+  if (window.leaderboardSystem) {
+    window.leaderboardSystem.updatePlayerStats(userStreak, userScore);
+  }
 
   // Hiệu ứng animation cho streak
   if (streakEl) {
@@ -365,12 +371,16 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
 // Chọn môn học
 function selectSubject(subject) {
   selectedSubject = subject;
   popup.style.display = "none";
+
+  // Reset streak khi đổi môn
   userStreak = 0;
   updateStreak();
+
   loadQuestion();
 }
 
@@ -398,7 +408,9 @@ function updateTimerDisplay(seconds) {
 }
 
 function handleTimeout() {
+  // Reset streak khi hết giờ
   resetStreak();
+
   if (currentQuestionType === "multiple-choice") {
     const buttons = document.querySelectorAll(".option-btn");
     buttons.forEach(btn => {
@@ -586,10 +598,10 @@ function handleAnswer(button, selectedOption) {
   if (selectedOption === correctAnswer) {
     button.classList.add("correct");
     addPoint();
-    increaseStreak();
+    increaseStreak(); // Tăng streak khi đúng
   } else {
     button.classList.add("incorrect");
-    resetStreak();
+    resetStreak(); // Reset streak khi sai
     buttons.forEach(btn => {
       if (btn.textContent === correctAnswer) {
         btn.classList.add("correct");
@@ -611,7 +623,7 @@ function submitEssayAnswer() {
   if (userAnswer === "") {
     essayFeedbackEl.textContent = "⚠️ Bạn chưa nhập câu trả lời!";
     essayFeedbackEl.style.color = "#ff9800";
-    resetStreak();
+    resetStreak(); // Reset streak khi không trả lời
     showExplanation();
     return;
   }
@@ -621,11 +633,11 @@ function submitEssayAnswer() {
     essayFeedbackEl.textContent = "✅ Chính xác! Bạn đã trả lời đúng.";
     essayFeedbackEl.style.color = "#4CAF50";
     addPoint();
-    increaseStreak();
+    increaseStreak(); // Tăng streak khi đúng
   } else {
     essayFeedbackEl.textContent = `❌ Sai rồi! Đáp án đúng là: ${correctAnswer}`;
     essayFeedbackEl.style.color = "#f44336";
-    resetStreak();
+    resetStreak(); // Reset streak khi sai
   }
 
   showExplanation();
@@ -655,17 +667,6 @@ ${avoidList}
 Yêu cầu:
 - Nội dung câu hỏi liên quan trực tiếp đến kiến thức Tin học lớp 12.
 - Ngẫu nhiên chọn một trong các chủ đề trên.
-- Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
-- Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
-- Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
-- Trả về JSON:
-{ "question": "...", "options": [...], "answer": "...", "explanation": "..." }`;
-  } else if (selectedSubject === "english") {
-    prompt = `Hãy tạo một câu hỏi trắc nghiệm về từ vựng tiếng anh theo các chủ đề như: Technology, Environment, Health, Education, Culture, Travel, Food, Sports, Business,...
-${avoidList}
-Yêu cầu:
-- Nội dung câu hỏi liên quan trực tiếp đến từ vựng tiếng anh.
-- Ngẫu nhiên chọn một trong các chủ đề.
 - Câu hỏi có 4 lựa chọn trả lời, trong đó chỉ có 1 đáp án đúng.
 - Tránh lặp lại câu hỏi và đáp án ở các lần gọi.
 - Thêm phần giải thích ngắn gọn (1-5 câu) cho đáp án đúng.
@@ -723,13 +724,13 @@ Yêu cầu:
 
 function showExplanation() {
   document.getElementById("explanation-text").textContent = explanationText;
-  document.getElementById("explanation-popup").style.display = "flex";
+  document.getElementById("explanation-popup").style.display = "block";
 }
 
 function closeExplanation() {
   document.getElementById("explanation-popup").style.display = "none";
 }
 
-// Khởi tạo điểm ban đầu
+// Khởi tạo điểm và streak ban đầu
 updateScore();
 updateStreak();

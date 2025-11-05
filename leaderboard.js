@@ -1,0 +1,285 @@
+// ==================== LEADERBOARD MANAGER ====================
+class LeaderboardManager {
+    constructor() {
+        // Kiểm tra xem config.js đã được load chưa
+        if (!window.GITHUB_CONFIG) {
+            console.error("❌ Chưa load config.js! Hãy tạo file config.js từ config.example.js");
+            return;
+        }
+
+        this.config = window.GITHUB_CONFIG;
+        this.currentPlayer = {
+            name: "",
+            maxStreak: 0,
+            currentStreak: 0,
+            totalScore: 0,
+            lastPlayed: ""
+        };
+    }
+
+    // Lấy dữ liệu leaderboard từ Gist
+    async fetchLeaderboard() {
+        if (!this.config) {
+            console.error("❌ Config chưa được setup");
+            return { players: [] };
+        }
+
+        try {
+            const response = await fetch(`https://api.github.com/gists/${this.config.gistId}`, {
+                headers: {
+                    'Authorization': `token ${this.config.token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const gist = await response.json();
+            const content = gist.files[this.config.filename].content;
+            return JSON.parse(content);
+        } catch (error) {
+            console.error("Error fetching leaderboard:", error);
+            return { players: [] };
+        }
+    }
+
+    // Cập nhật leaderboard lên Gist
+    async updateLeaderboard(data) {
+        if (!this.config) {
+            console.error("❌ Config chưa được setup");
+            return false;
+        }
+
+        try {
+            const response = await fetch(`https://api.github.com/gists/${this.config.gistId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `token ${this.config.token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    files: {
+                        [this.config.filename]: {
+                            content: JSON.stringify(data, null, 2)
+                        }
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            return true;
+        } catch (error) {
+            console.error("Error updating leaderboard:", error);
+            return false;
+        }
+    }
+
+    // Lưu streak mới vào leaderboard
+    async saveStreak(playerName, streak, score) {
+        const data = await this.fetchLeaderboard();
+
+        // Tìm người chơi trong danh sách
+        let playerIndex = data.players.findIndex(p => p.name === playerName);
+
+        if (playerIndex === -1) {
+            // Người chơi mới
+            data.players.push({
+                name: playerName,
+                maxStreak: streak,
+                totalScore: score,
+                lastPlayed: new Date().toISOString(),
+                gamesPlayed: 1
+            });
+        } else {
+            // Cập nhật người chơi cũ
+            const player = data.players[playerIndex];
+            player.maxStreak = Math.max(player.maxStreak, streak);
+            player.totalScore += score;
+            player.lastPlayed = new Date().toISOString();
+            player.gamesPlayed = (player.gamesPlayed || 0) + 1;
+        }
+
+        // Sắp xếp theo maxStreak giảm dần, giữ top 50
+        data.players.sort((a, b) => b.maxStreak - a.maxStreak);
+        data.players = data.players.slice(0, 50);
+
+        await this.updateLeaderboard(data);
+    }
+
+    // Lấy top N người chơi
+    async getTopPlayers(limit = 10) {
+        const data = await this.fetchLeaderboard();
+        return data.players.slice(0, limit);
+    }
+
+    // Lấy vị trí của người chơi
+    async getPlayerRank(playerName) {
+        const data = await this.fetchLeaderboard();
+        const index = data.players.findIndex(p => p.name === playerName);
+        return index === -1 ? null : index + 1;
+    }
+}
+
+// ==================== KHỞI TẠO ====================
+const leaderboard = new LeaderboardManager();
+
+// ==================== UI FUNCTIONS ====================
+
+// Hiển thị form nhập tên
+function showNameInputPopup() {
+    const popup = document.getElementById("name-input-popup");
+    if (popup) {
+        popup.style.display = "flex";
+    }
+}
+
+// Xử lý khi người dùng nhập tên
+function submitPlayerName() {
+    const nameInput = document.getElementById("player-name-input");
+    const playerName = nameInput.value.trim();
+
+    if (playerName === "") {
+        alert("Vui lòng nhập tên của bạn!");
+        return;
+    }
+
+    if (playerName.length > 20) {
+        alert("Tên không được quá 20 ký tự!");
+        return;
+    }
+
+    leaderboard.currentPlayer.name = playerName;
+    document.getElementById("name-input-popup").style.display = "none";
+
+    // Hiển thị tên người chơi
+    const displayName = document.getElementById("current-player-name");
+    if (displayName) {
+        displayName.textContent = playerName;
+    }
+}
+
+// Hiển thị bảng xếp hạng
+async function showLeaderboard() {
+    const popup = document.getElementById("leaderboard-popup");
+    const tbody = document.getElementById("leaderboard-tbody");
+
+    if (!popup || !tbody) return;
+
+    tbody.innerHTML = '<tr><td colspan="4">Đang tải...</td></tr>';
+    popup.style.display = "flex";
+
+    const topPlayers = await leaderboard.getTopPlayers(10);
+
+    if (topPlayers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4">Chưa có dữ liệu</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = topPlayers.map((player, index) => {
+        const medal = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "";
+        const isCurrentPlayer = player.name === leaderboard.currentPlayer.name;
+        const rowClass = isCurrentPlayer ? "current-player-row" : "";
+
+        return `
+      <tr class="${rowClass}">
+        <td>${medal} #${index + 1}</td>
+        <td>${escapeHtml(player.name)}</td>
+        <td>🔥 ${player.maxStreak}</td>
+        <td>⭐ ${player.totalScore}</td>
+      </tr>
+    `;
+    }).join("");
+}
+
+// Đóng popup leaderboard
+function closeLeaderboard() {
+    const popup = document.getElementById("leaderboard-popup");
+    if (popup) {
+        popup.style.display = "none";
+    }
+}
+
+// Lưu kết quả khi kết thúc game hoặc đạt milestone
+async function saveGameResult() {
+    if (leaderboard.currentPlayer.name === "") {
+        return; // Chưa nhập tên
+    }
+
+    // Chỉ lưu khi có streak đáng kể (>=5) hoặc điểm cao
+    if (leaderboard.currentPlayer.maxStreak >= 5 || leaderboard.currentPlayer.totalScore >= 10) {
+        await leaderboard.saveStreak(
+            leaderboard.currentPlayer.name,
+            leaderboard.currentPlayer.maxStreak,
+            leaderboard.currentPlayer.totalScore
+        );
+
+        console.log("✅ Đã lưu kết quả lên leaderboard");
+    }
+}
+
+// Cập nhật thông tin người chơi khi streak thay đổi
+function updatePlayerStats(currentStreak, totalScore) {
+    leaderboard.currentPlayer.currentStreak = currentStreak;
+    leaderboard.currentPlayer.maxStreak = Math.max(
+        leaderboard.currentPlayer.maxStreak,
+        currentStreak
+    );
+    leaderboard.currentPlayer.totalScore = totalScore;
+
+    // Tự động lưu khi đạt milestone
+    if (currentStreak > 0 && currentStreak % 10 === 0) {
+        saveGameResult();
+    }
+}
+
+// Escape HTML để tránh XSS
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+// ==================== EVENT LISTENERS ====================
+
+// Tự động hiện form nhập tên khi load trang
+window.addEventListener('load', () => {
+    showNameInputPopup();
+});
+
+// Lưu kết quả khi người dùng rời trang
+window.addEventListener('beforeunload', () => {
+    if (leaderboard.currentPlayer.maxStreak > 0) {
+        saveGameResult();
+    }
+});
+
+// Cho phép nhấn Enter để submit tên
+const nameInput = document.getElementById("player-name-input");
+if (nameInput) {
+    nameInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            submitPlayerName();
+        }
+    });
+}
+
+// ==================== EXPORT FUNCTIONS ====================
+// Các function này sẽ được gọi từ code chính
+window.leaderboardSystem = {
+    updatePlayerStats,
+    saveGameResult,
+    showLeaderboard,
+    closeLeaderboard,
+    submitPlayerName
+};
