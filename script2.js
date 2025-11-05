@@ -724,7 +724,7 @@ Yêu cầu:
 
 function showExplanation() {
   document.getElementById("explanation-text").textContent = explanationText;
-  document.getElementById("explanation-popup").style.display = "block";
+  document.getElementById("explanation-popup").style.display = "flex";
 }
 
 function closeExplanation() {
