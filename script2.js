@@ -84,7 +84,7 @@ const vocabularyData = [
   { id: 79, hiragana: "にほんご", kanji: "日本語", meaning: "Tiếng Nhật" },
   { id: 80, hiragana: "∼ご", kanji: "∼語", meaning: "Tiếng~" },
   { id: 81, hiragana: "なん", kanji: "何", meaning: "Cái gì" },
-  { id: 82, hiragana: "そう", kanji: "", meaning: "Đúng vậy" },
+  { id: 82, hiragana: "そうです", kanji: "", meaning: "Đúng vậy" },
   { id: 83, hiragana: "ちがいます。", kanji: "違います。", meaning: "Nhầm rồi" },
   { id: 84, hiragana: "そうですか。", kanji: "", meaning: "Thế à?" },
   { id: 85, hiragana: "あのう", kanji: "", meaning: "À…(được sử dụng để thể hiện sự do dự)" },
@@ -471,7 +471,7 @@ Yêu cầu:
 
 function showExplanation() {
   document.getElementById("explanation-text").textContent = explanationText;
-  document.getElementById("explanation-popup").style.display = "block";
+  document.getElementById("explanation-popup").style.display = "flex";
 }
 
 function closeExplanation() {

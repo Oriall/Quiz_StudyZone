@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code:wght@300..700&display=swap');
 
 * {
+  user-select: none;
   font-family: 'Fira Code';
 }
 
@@ -50,6 +51,11 @@ button.option-btn {
   background-color: #CAA6F9;
   color: #1E1E2E;
   transform: scale(1.05);
+}
+.option-btn:active {
+  background-color: #caa6f9bc;
+  color: #1E1E2E;
+  transform: scale(0.9);
 }
 
 button.option-btn.correct {
@@ -225,4 +231,44 @@ button.option-btn.incorrect {
   font-weight: bold;
   margin-left: 5px;
   text-shadow: 0 0 5px #8f39ff;
+}
+
+.popup2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content2 {
+  padding: 30px 40px;
+  border-radius: 10px;
+  text-align: center;
+  color: #BBBBC0;
+  background: #1E1E2E;
+  box-shadow: 0 0 150px 0 rgba(239, 241, 245, 0.11);
+}
+
+.popup-content2 button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #30303F;
+  color: #BBBBC0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.popup-content2 button:hover {
+  background-color: #CAA6F9;
+  color: #1E1E2E;
+  transform: scale(1.05);
 }
