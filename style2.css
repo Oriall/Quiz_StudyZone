@@ -404,11 +404,16 @@ button.option-btn.incorrect {
 
 /* Hiển thị tên người chơi */
 .player-info {
-  position: fixed;
+  position: absolute;
   top: 190px;
   right: 20px;
   background: #1E1E2E;
-  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+  width: 106px;
+  height: 32px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   z-index: 100;
@@ -418,7 +423,13 @@ button.option-btn.incorrect {
   font-weight: bold;
   color: #667eea;
 }
-
+@media only screen and (max-width: 700px) {
+  .player-info {
+    position: absolute;
+    left: 0;
+    top: 60px;
+  }
+}
 /* Popup Leaderboard */
 #leaderboard-popup {
   display: none;
@@ -542,4 +553,13 @@ button.option-btn.incorrect {
   box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
   transition: transform 0.2s;
   z-index: 100;
+}
+
+/* Nếu là điện thoại -> đặt vị trí tuyệt đối ở góc trên trái */
+@media only screen and (max-width: 700px) {
+  .save-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 }
