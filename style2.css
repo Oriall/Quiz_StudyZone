@@ -272,3 +272,31 @@ button.option-btn.incorrect {
   color: #1E1E2E;
   transform: scale(1.05);
 }
+.essay-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+#essay-input {
+  padding: 15px;
+  font-size: 18px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#essay-input:focus {
+  border-color: #4CAF50;
+}
+
+.essay-feedback {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+  min-height: 30px;
+}

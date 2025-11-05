@@ -35,6 +35,32 @@
     </button>
 
   </div>
+  <!-- Container cho câu hỏi tự luận (thêm vào sau quiz-container) -->
+  <div id="essay-container" class="quiz-container" style="display: none;">
+    <h2 id="essay-question">Wait a minutes...</h2>
+
+    <div class="essay-input-wrapper">
+      <input type="text" id="essay-input" placeholder="Nhập câu trả lời bằng Hiragana..." autocomplete="off" />
+      <button class="button" id="essay-submit">
+        Trả lời
+        <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="essay-feedback" class="essay-feedback"></div>
+    <div id="timer" class="timer">00:00</div>
+
+    <button class="button" id="next-btn-essay" onclick="loadQuestion()">
+      Reload Now
+      <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+        <path clip-rule="evenodd"
+          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+          fill-rule="evenodd"></path>
+      </svg>
+    </button>
+  </div>
   <div class="point_box">
     <p class="point">Số Từ Vựng Đã Nhớ:<span>999</span></p>
   </div>
