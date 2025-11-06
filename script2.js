@@ -109,7 +109,7 @@ const vocabularyData = [
   { id: 104, hiragana: "うけつけ", kanji: "受付", meaning: "bộ phận tiếp tân, phòng thường trực, lễ tân" },
   { id: 105, hiragana: "ロビー", kanji: "", meaning: "hành lang, đại sảnh" },
   { id: 106, hiragana: "へや", kanji: "部屋", meaning: "căn phòng" },
-  { id: 107, hiragana: "トイレ（おてあらい）", kanji: "(お手洗い）", meaning: "nhà vệ sinh, phòng vệ sinh, toa-lét" },
+  { id: 107, hiragana: "おてあらい", kanji: "(お手洗い）", meaning: "nhà vệ sinh, phòng vệ sinh, toa-lét" },
   { id: 108, hiragana: "かいだん", kanji: "階段", meaning: "cầu thang" },
   { id: 109, hiragana: "エレベーター", kanji: "", meaning: "thang máy" },
   { id: 110, hiragana: "エスカレーター", kanji: "", meaning: "thang cuốn" },
