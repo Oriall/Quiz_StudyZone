@@ -11,124 +11,146 @@
 </head>
 
 <body>
-  <div id="subject-popup" class="popup">
-    <div class="popup-content">
-      <h3>Chọn môn học 🤖</h3>
-      <button onclick="selectSubject('it')">Tin học</button>
-      <button onclick="selectSubject('english')">Tiếng Anh</button>
-      <button onclick="selectSubject('math')">Toán Học</button>
-      <button onclick="selectSubject('physics')">Vật Lý</button>
-      <button onclick="selectSubject('japanese')">Tiếng Nhật</button>
+  <div class="loader">
+    <span class="loader-text">Loading</span>
+    <span class="load"></span>
+  </div>
+  <script>
+    window.onload = function () {
+      var preloader = document.querySelector(".loader");
+      var mainContent = document.querySelector("#wrapper");
+
+      setTimeout(function () {
+        // Ẩn preloader khi tải xong
+        preloader.style.display = "none";
+        // Hiển thị nội dung chính của trang
+        mainContent.style.display = "flex";
+        mainContent.classList.add('animation-status6');
+        // Added missing class name, assuming you want to toggle a class named "hidden"
+      }, 2000);
+    };
+
+  </script>
+  <div id="wrapper" style="display: none;">
+    <div id="subject-popup" class="popup">
+      <div class="popup-content">
+        <h3>Chọn môn học 🤖</h3>
+        <button onclick="selectSubject('it')">Tin học</button>
+        <button onclick="selectSubject('english')">Tiếng Anh</button>
+        <button onclick="selectSubject('math')">Toán Học</button>
+        <button onclick="selectSubject('physics')">Vật Lý</button>
+        <button onclick="selectSubject('japanese')">Tiếng Nhật</button>
+      </div>
     </div>
-  </div>
-  <!-- Popup nhập tên -->
-  <div id="name-input-popup">
-    <div class="name-input-box">
-      <h2>🎮 Chào mừng bạn!</h2>
-      <p>Nhập tên để tham gia bảng xếp hạng</p>
-      <input type="text" id="player-name-input" placeholder="Tên của bạn..." maxlength="20" autofocus />
-      <button class="submit-name-btn" onclick="window.leaderboardSystem.submitPlayerName()">
-        Bắt đầu
-      </button>
+    <!-- Popup nhập tên -->
+    <div id="name-input-popup">
+      <div class="name-input-box">
+        <h2>🎮 Chào mừng bạn!</h2>
+        <p>Nhập tên để tham gia bảng xếp hạng</p>
+        <input type="text" id="player-name-input" placeholder="Tên của bạn..." maxlength="20" autofocus />
+        <button class="submit-name-btn" onclick="window.leaderboardSystem.submitPlayerName()">
+          Bắt đầu
+        </button>
+      </div>
     </div>
-  </div>
 
-  <!-- Hiển thị tên người chơi -->
-  <div class="player-info">
-    👤 <span id="current-player-name">Guest</span>
-  </div>
-
-  <!-- Popup Leaderboard -->
-  <div id="leaderboard-popup">
-    <div class="leaderboard-box">
-      <h2>🏆 Bảng Xếp Hạng</h2>
-      <table class="leaderboard-table">
-        <thead>
-          <tr>
-            <th>Hạng</th>
-            <th>Tên</th>
-            <th>Streak</th>
-            <th>Điểm</th>
-          </tr>
-        </thead>
-        <tbody id="leaderboard-tbody">
-          <tr>
-            <td colspan="4">Đang tải...</td>
-          </tr>
-        </tbody>
-      </table>
-      <button class="close-leaderboard-btn" onclick="window.leaderboardSystem.closeLeaderboard()">
-        Đóng
-      </button>
+    <!-- Hiển thị tên người chơi -->
+    <div class="player-info">
+      👤 <span id="current-player-name">Guest</span>
     </div>
-  </div>
 
-  <!-- Nút mở leaderboard -->
-  <button class="leaderboard-btn" onclick="window.leaderboardSystem.showLeaderboard()">
-    🏆 Bảng Xếp Hạng
-  </button>
-  <button class="save-btn" onclick="window.leaderboardSystem.saveGameResult()" title="Lưu kết quả ngay">
-    💾 Lưu
-  </button>
+    <!-- Popup Leaderboard -->
+    <div id="leaderboard-popup">
+      <div class="leaderboard-box">
+        <h2>🏆 Bảng Xếp Hạng</h2>
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Hạng</th>
+              <th>Tên</th>
+              <th>Streak</th>
+              <th>Điểm</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-tbody">
+            <tr>
+              <td colspan="4">Đang tải...</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="close-leaderboard-btn" onclick="window.leaderboardSystem.closeLeaderboard()">
+          Đóng
+        </button>
+      </div>
+    </div>
 
-  <div class="quiz-container">
-    <h2 id="question">Wait a minutes...</h2>
-    <div id="options" class="options-container"></div>
-    <div id="timer" class="timer">00:00</div>
-    <button class="button" id="next-btn" onclick="loadQuestion()">
-      Next Question
-      <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
-        <path clip-rule="evenodd"
-          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-          fill-rule="evenodd"></path>
-      </svg>
+    <!-- Nút mở leaderboard -->
+    <button class="leaderboard-btn" onclick="window.leaderboardSystem.showLeaderboard()">
+      🏆 Bảng Xếp Hạng
+    </button>
+    <button class="save-btn" onclick="window.leaderboardSystem.saveGameResult()" title="Lưu kết quả ngay">
+      💾 Lưu
     </button>
 
-  </div>
-  <!-- Container cho câu hỏi tự luận (thêm vào sau quiz-container) -->
-  <div id="essay-container" class="quiz-container" style="display: none;">
-    <h2 id="essay-question">Wait a minutes...</h2>
-
-    <div class="essay-input-wrapper">
-      <input type="text" id="essay-input" placeholder="Nhập câu trả lời bằng Hiragana..." autocomplete="off" />
-      <button class="button" id="essay-submit">
-        Trả lời
+    <div class="quiz-container">
+      <h2 id="question">Wait a minutes...</h2>
+      <div id="options" class="options-container"></div>
+      <div id="timer" class="timer">00:00</div>
+      <button class="button" id="next-btn" onclick="loadQuestion()">
+        Next Question
         <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
-          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          <path clip-rule="evenodd"
+            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+            fill-rule="evenodd"></path>
+        </svg>
+      </button>
+
+    </div>
+    <!-- Container cho câu hỏi tự luận (thêm vào sau quiz-container) -->
+    <div id="essay-container" class="quiz-container" style="display: none;">
+      <h2 id="essay-question">Wait a minutes...</h2>
+
+      <div class="essay-input-wrapper">
+        <input type="text" id="essay-input" placeholder="Nhập câu trả lời bằng Hiragana..." autocomplete="off" />
+        <button class="button" id="essay-submit">
+          Trả lời
+          <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="essay-feedback" class="essay-feedback"></div>
+      <div id="timer" class="timer">00:00</div>
+
+      <button class="button" id="next-btn-essay" onclick="loadQuestion()">
+        Next Question
+        <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+          <path clip-rule="evenodd"
+            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+            fill-rule="evenodd"></path>
         </svg>
       </button>
     </div>
-
-    <div id="essay-feedback" class="essay-feedback"></div>
-    <div id="timer" class="timer">00:00</div>
-
-    <button class="button" id="next-btn-essay" onclick="loadQuestion()">
-      Next Question
-      <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
-        <path clip-rule="evenodd"
-          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-          fill-rule="evenodd"></path>
-      </svg>
-    </button>
-  </div>
-  <div class="point_box">
-    <p class="point">Số Từ Vựng Đã Nhớ:<span>999</span></p>
-  </div>
-
-  <div class="point_box2">
-    <p class="point2">Streak:<span>999</span></p>
-  </div>
-
-  <div id="explanation-popup" class="popup2" style="display: none;" onclick="closeExplanation()">
-    <div class="popup-content2">
-      <h3>Giải thích đáp án 📘</h3>
-      <p id="explanation-text">Đang tải...</p>
-      <button onclick="closeExplanation()">Đóng</button>
+    <div class="point_box">
+      <p class="point">Số Từ Vựng Đã Nhớ:<span>999</span></p>
     </div>
+
+    <div class="point_box2">
+      <p class="point2">Streak:<span>999</span></p>
+    </div>
+
+    <div id="explanation-popup" class="popup2" style="display: none;" onclick="closeExplanation()">
+      <div class="popup-content2">
+        <h3>Giải thích đáp án 📘</h3>
+        <p id="explanation-text">Đang tải...</p>
+        <button onclick="closeExplanation()">Đóng</button>
+      </div>
+    </div>
+    <footer class="footer">
+      <p>&copy; 2025 IT Quiz App | Liên hệ: <a href="https://github.com/oriall">Github: Oriall</a></p>
+    </footer>
   </div>
-  <footer class="footer">
-    <p>&copy; 2025 IT Quiz App | Liên hệ: <a href="https://github.com/oriall">Github: Oriall</a></p>
-  </footer>
 
   <script src="script2.js"></script>
 </body>

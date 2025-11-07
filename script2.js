@@ -208,9 +208,9 @@ let explanationText = "";
 let selectedSubject = "";
 let timerInterval = null;
 let userScore = 0;
-let userStreak = 0; // Biến lưu streak
-let maxStreak = 0; // Biến lưu streak cao nhất
-let currentQuestionType = ""; // "multiple-choice" hoặc "essay"
+let userStreak = 0; 
+let maxStreak = 0; 
+let currentQuestionType = ""; // "multiple-choice" - "essay"
 
 // Quản lý lịch sử câu hỏi
 let questionHistory = [];
@@ -229,21 +229,18 @@ function getAvoidListPrompt() {
   return `\nTránh lặp lại các câu hỏi sau:\n- ${questionHistory.join('\n- ')}\n`;
 }
 
-// Cập nhật điểm hiển thị
 function updateScore() {
   if (pointEl) {
     pointEl.textContent = userScore;
   }
 }
 
-// Cập nhật streak hiển thị
 function updateStreak() {
   if (streakEl) {
     streakEl.textContent = userStreak;
   }
 }
 
-// Thêm điểm khi trả lời đúng
 function addPoint() {
   userScore++;
   updateScore();
@@ -261,7 +258,6 @@ function addPoint() {
   }
 }
 
-// Tăng streak khi trả lời đúng
 function increaseStreak() {
   userStreak++;
   if (userStreak > maxStreak) {
