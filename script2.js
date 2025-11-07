@@ -91,7 +91,7 @@ const vocabularyData = [
   { id: 88, hiragana: "どうも", kanji: "", meaning: "Cảm ơn" },
   { id: 89, hiragana: "ありがとうございます", kanji: "", meaning: "Cảm ơn nhiều" },
   { id: 90, hiragana: "これから おせわになります", kanji: "これから お世話になります", meaning: "Từ này mong được anh/chị giúp đỡ" },
-  { id: 91, hiragana: "こちらこそ よろしく", kanji: "", meaning: "Chính tôi mới mong được anh/chị giúp đỡ" },
+  { id: 91, hiragana: "こちらこそどぞよろしく。", kanji: "", meaning: "Chính tôi mới mong được anh/chị giúp đỡ" },
 
   // Bài 3
   { id: 92, hiragana: "ここ", kanji: "", meaning: "chỗ này, đây" },
