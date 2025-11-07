@@ -19,7 +19,7 @@ body {
   user-select: none;
   width: 100%;
   overflow: hidden;
-  background: url('/img/evening-sky.png');
+  background: url('./img/evening-sky.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
