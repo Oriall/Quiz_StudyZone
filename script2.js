@@ -72,7 +72,7 @@ const vocabularyData = [
   { id: 69, hiragana: "テレビ", kanji: "", meaning: "Tivi" },
   { id: 70, hiragana: "ラジオ", kanji: "", meaning: "Radio" },
   { id: 71, hiragana: "カメラ", kanji: "", meaning: "Máy ảnh" },
-  { id: 72, hiragana: "コンピュータ", kanji: "", meaning: "Máy vi tính" },
+  { id: 72, hiragana: "コンピューター", kanji: "", meaning: "Máy vi tính" },
   { id: 73, hiragana: "くるま", kanji: "自動車", meaning: "Ô tô, xe hơi" },
   { id: 74, hiragana: "つくえ", kanji: "机", meaning: "Cái bàn" },
   { id: 75, hiragana: "いす", kanji: "", meaning: "Ghế" },
