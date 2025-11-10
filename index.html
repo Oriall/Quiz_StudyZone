@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
   <meta charset="UTF-8" />
@@ -7,60 +7,769 @@
   <title>IT Quiz</title>
   <script src="leaderboard.js"></script>
   <link rel="shortcut icon" href="./img/Neko_Gojo_sensei-removebg-preview.png" type="image/x-icon">
-  <link rel="stylesheet" href="style2.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #00f5ff;
+      --secondary: #7c3aed;
+      --accent: #ec4899;
+      --bg-dark: #0a0a0f;
+      --bg-card: rgba(20, 20, 30, 0.7);
+      --text: #e5e7eb;
+      --text-dim: #9ca3af;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 245, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
+      z-index: -1;
+      animation: bgShift 20s ease infinite;
+    }
+
+    @keyframes bgShift {
+
+      0%,
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+
+      50% {
+        transform: scale(1.1) rotate(5deg);
+      }
+    }
+
+    /* Grid Pattern Overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -1;
+      opacity: 0.5;
+    }
+
+    /* Loader */
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeOut 0.5s ease 2s forwards;
+    }
+
+    .loader-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 2s linear infinite;
+      margin-bottom: 2rem;
+    }
+
+    .load {
+      width: 80px;
+      height: 80px;
+      border: 4px solid rgba(0, 245, 255, 0.1);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes shimmer {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    /* Main Wrapper */
+    #wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 2s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .player-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      border: 1px solid rgba(0, 245, 255, 0.2);
+      font-size: 1rem;
+      font-weight: 500;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .stats-group {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .stat-box {
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(0, 245, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      min-width: 100px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 48px rgba(0, 245, 255, 0.2);
+    }
+
+    /* Stats Box - Hidden Labels */
+    .stat-box .stat-label {
+      display: none;
+    }
+
+    .stat-box .point,
+    .stat-box .point2 {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--text-dim);
+    }
+
+    .stat-box .point span,
+    .stat-box .point2 span {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 0.25rem;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      display: flex;
+      gap: 0.75rem;
+      z-index: 100;
+    }
+
+    .icon-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 245, 255, 0.2);
+      color: var(--primary);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .icon-btn:hover {
+      background: rgba(0, 245, 255, 0.1);
+      transform: scale(1.1);
+      box-shadow: 0 8px 32px rgba(0, 245, 255, 0.3);
+    }
+
+    /* Quiz Container */
+    .quiz-container {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 3rem;
+      border: 1px solid rgba(0, 245, 255, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+      background-size: 200% auto;
+      animation: shimmer 3s linear infinite;
+    }
+
+    #question,
+    #essay-question {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 2.5rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    /* Timer */
+    .timer {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      padding: 0.75rem 1.5rem;
+      background: rgba(124, 58, 237, 0.2);
+      border-radius: 50px;
+      border: 2px solid var(--secondary);
+      color: var(--primary);
+      font-family: 'Courier New', monospace;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    }
+
+    /* Options */
+    .options-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .option-btn {
+      padding: 1.25rem 1.5rem;
+      background: rgba(30, 30, 45, 0.6);
+      border: 2px solid rgba(0, 245, 255, 0.2);
+      border-radius: 16px;
+      color: var(--text);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .option-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: rgba(0, 245, 255, 0.1);
+      transform: translateX(4px);
+    }
+
+    .option-btn:hover::before {
+      left: 100%;
+    }
+
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--success);
+      animation: pulse 0.5s ease;
+    }
+
+    .option-btn.incorrect {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: var(--error);
+      animation: shake 0.5s ease;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-10px);
+      }
+
+      75% {
+        transform: translateX(10px);
+      }
+    }
+
+    /* Essay Input */
+    .essay-input-wrapper {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    #essay-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      background: rgba(30, 30, 45, 0.6);
+      border: 2px solid rgba(0, 245, 255, 0.2);
+      border-radius: 16px;
+      color: var(--text);
+      font-size: 1.125rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    #essay-input:focus {
+      border-color: var(--primary);
+      background: rgba(0, 245, 255, 0.05);
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    }
+
+    .essay-feedback {
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      display: none;
+    }
+
+    .essay-feedback:not(:empty) {
+      display: block;
+    }
+
+    /* Next Button */
+    .button {
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
+      margin-top: 1.5rem;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(124, 58, 237, 0.5);
+    }
+
+    .button .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Popups */
+    .popup,
+    .popup2,
+    #name-input-popup,
+    #leaderboard-popup {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .popup-content,
+    .popup-content2,
+    .name-input-box,
+    .leaderboard-box {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      padding: 3rem;
+      border-radius: 24px;
+      border: 1px solid rgba(0, 245, 255, 0.3);
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+      max-width: 500px;
+      width: 90%;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .popup-content h3,
+    .popup-content2 h3,
+    .name-input-box h2,
+    .leaderboard-box h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .popup-content button,
+    .popup-content2 button,
+    .submit-name-btn,
+    .close-leaderboard-btn {
+      width: 100%;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background: rgba(30, 30, 45, 0.6);
+      border: 2px solid rgba(0, 245, 255, 0.3);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .popup-content button:hover,
+    .popup-content2 button:hover,
+    .submit-name-btn:hover,
+    .close-leaderboard-btn:hover {
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4);
+    }
+
+    #player-name-input {
+      width: 100%;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: rgba(30, 30, 45, 0.6);
+      border: 2px solid rgba(0, 245, 255, 0.3);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    #player-name-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    }
+
+    /* Leaderboard Table */
+    .leaderboard-table {
+      width: 100%;
+      margin: 1.5rem 0;
+      border-collapse: collapse;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+    }
+
+    .leaderboard-table th {
+      background: rgba(124, 58, 237, 0.2);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+    }
+
+    .leaderboard-table tr:hover {
+      background: rgba(0, 245, 255, 0.05);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-dim);
+      font-size: 0.875rem;
+      margin-top: 4rem;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer a:hover {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #wrapper {
+        padding: 1rem;
+      }
+
+      .quiz-container {
+        padding: 2rem 1.5rem;
+      }
+
+      #question,
+      #essay-question {
+        font-size: 1.25rem;
+      }
+
+      .timer {
+        position: static;
+        margin-bottom: 1.5rem;
+        width: fit-content;
+      }
+
+      .options-container {
+        grid-template-columns: 1fr;
+      }
+
+      .action-buttons {
+        top: auto;
+        bottom: 2rem;
+        right: 1rem;
+        flex-direction: column;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .stats-group {
+        justify-content: center;
+      }
+    }
+
+    /* Streak Milestone */
+    .streak-milestone {
+      animation: milestonePopup 2s ease-out forwards;
+    }
+
+    @keyframes milestonePopup {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+      }
+
+      70% {
+        transform: translate(-50%, -50%) scale(0.95);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Loader -->
   <div class="loader">
     <span class="loader-text">Loading</span>
     <span class="load"></span>
   </div>
-  <script>
-    window.onload = function () {
-      var preloader = document.querySelector(".loader");
-      var mainContent = document.querySelector("#wrapper");
 
-      setTimeout(function () {
-        // Ẩn preloader khi tải xong
-        preloader.style.display = "none";
-        // Hiển thị nội dung chính của trang
-        mainContent.style.display = "flex";
-        mainContent.classList.add('animation-status6');
-        // Added missing class name, assuming you want to toggle a class named "hidden"
-      }, 2000);
-    };
-
-  </script>
+  <!-- Main Wrapper -->
   <div id="wrapper" style="display: none;">
-    <div id="subject-popup" class="popup">
-      <div class="popup-content">
-        <h3>Chọn môn học 🤖</h3>
-        <button onclick="selectSubject('it')">Tin học</button>
-        <button onclick="selectSubject('english')">Tiếng Anh</button>
-        <button onclick="selectSubject('math')">Toán Học</button>
-        <button onclick="selectSubject('physics')">Vật Lý</button>
-        <button onclick="selectSubject('japanese')">Tiếng Nhật</button>
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="icon-btn" onclick="window.leaderboardSystem?.showLeaderboard()" title="Bảng xếp hạng">
+        🏆
+      </button>
+      <button class="icon-btn" onclick="window.leaderboardSystem?.saveGameResult()" title="Lưu kết quả">
+        💾
+      </button>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <div class="player-info">
+        👤 <span id="current-player-name">Guest</span>
+      </div>
+
+      <div class="stats-group">
+        <div class="stat-box point_box">
+          <span class="stat-label">Từ vựng</span>
+          <p class="point stat-value">Số Từ Vựng Đã Nhớ:<span>0</span></p>
+        </div>
+        <div class="stat-box point_box2">
+          <span class="stat-label">Streak</span>
+          <p class="point2 stat-value">Streak:<span>0</span></p>
+        </div>
       </div>
     </div>
-    <!-- Popup nhập tên -->
-    <div id="name-input-popup">
+
+    <!-- Quiz Container (Multiple Choice) -->
+    <div class="quiz-container">
+      <div id="timer" class="timer">00:00</div>
+      <h2 id="question">Chọn môn học để bắt đầu...</h2>
+      <div id="options" class="options-container"></div>
+      <button class="button" id="next-btn" onclick="loadQuestion?.()">
+        Next Question
+        <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+          <path clip-rule="evenodd"
+            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+            fill-rule="evenodd"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Essay Container -->
+    <div id="essay-container" class="quiz-container" style="display: none;">
+      <div id="timer" class="timer">00:00</div>
+      <h2 id="essay-question">Câu hỏi tự luận...</h2>
+
+      <div class="essay-input-wrapper">
+        <input type="text" id="essay-input" placeholder="Nhập câu trả lời bằng Hiragana..." autocomplete="off" />
+        <button class="button" id="essay-submit">
+          Trả lời
+          <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="essay-feedback" class="essay-feedback"></div>
+
+      <button class="button" id="next-btn-essay" onclick="loadQuestion?.()">
+        Next Question
+        <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+          <path clip-rule="evenodd"
+            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+            fill-rule="evenodd"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Subject Selection Popup -->
+    <div id="subject-popup" class="popup">
+      <div class="popup-content">
+        <h3>Chọn môn học 🎯</h3>
+        <button onclick="selectSubject?.('it')">💻 Tin học</button>
+        <button onclick="selectSubject?.('english')">🇬🇧 Tiếng Anh</button>
+        <button onclick="selectSubject?.('math')">📐 Toán Học</button>
+        <button onclick="selectSubject?.('physics')">⚛️ Vật Lý</button>
+        <button onclick="selectSubject?.('japanese')">🇯🇵 Tiếng Nhật</button>
+      </div>
+    </div>
+
+    <!-- Name Input Popup -->
+    <div id="name-input-popup" style="display: none;">
       <div class="name-input-box">
         <h2>🎮 Chào mừng bạn!</h2>
-        <p>Nhập tên để tham gia bảng xếp hạng</p>
+        <p style="color: var(--text-dim); margin-bottom: 1rem;">Nhập tên để tham gia bảng xếp hạng</p>
         <input type="text" id="player-name-input" placeholder="Tên của bạn..." maxlength="20" autofocus />
-        <button class="submit-name-btn" onclick="window.leaderboardSystem.submitPlayerName()">
+        <button class="submit-name-btn" onclick="window.leaderboardSystem?.submitPlayerName()">
           Bắt đầu
         </button>
       </div>
     </div>
 
-    <!-- Hiển thị tên người chơi -->
-    <div class="player-info">
-      👤 <span id="current-player-name">Guest</span>
-    </div>
-
-    <!-- Popup Leaderboard -->
-    <div id="leaderboard-popup">
+    <!-- Leaderboard Popup -->
+    <div id="leaderboard-popup" style="display: none;">
       <div class="leaderboard-box">
         <h2>🏆 Bảng Xếp Hạng</h2>
         <table class="leaderboard-table">
@@ -74,84 +783,57 @@
           </thead>
           <tbody id="leaderboard-tbody">
             <tr>
-              <td colspan="4">Đang tải...</td>
+              <td colspan="4" style="text-align: center; color: var(--text-dim);">Đang tải...</td>
             </tr>
           </tbody>
         </table>
-        <button class="close-leaderboard-btn" onclick="window.leaderboardSystem.closeLeaderboard()">
+        <button class="close-leaderboard-btn" onclick="window.leaderboardSystem?.closeLeaderboard()">
           Đóng
         </button>
       </div>
     </div>
 
-    <!-- Nút mở leaderboard -->
-    <button class="leaderboard-btn" onclick="window.leaderboardSystem.showLeaderboard()">
-      🏆 Bảng Xếp Hạng
-    </button>
-    <button class="save-btn" onclick="window.leaderboardSystem.saveGameResult()" title="Lưu kết quả ngay">
-      💾 Lưu
-    </button>
-
-    <div class="quiz-container">
-      <h2 id="question">Wait a minutes...</h2>
-      <div id="options" class="options-container"></div>
-      <div id="timer" class="timer">00:00</div>
-      <button class="button" id="next-btn" onclick="loadQuestion()">
-        Next Question
-        <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
-          <path clip-rule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-            fill-rule="evenodd"></path>
-        </svg>
-      </button>
-
-    </div>
-    <!-- Container cho câu hỏi tự luận (thêm vào sau quiz-container) -->
-    <div id="essay-container" class="quiz-container" style="display: none;">
-      <h2 id="essay-question">Wait a minutes...</h2>
-
-      <div class="essay-input-wrapper">
-        <input type="text" id="essay-input" placeholder="Nhập câu trả lời bằng Hiragana..." autocomplete="off" />
-        <button class="button" id="essay-submit">
-          Trả lời
-          <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-          </svg>
-        </button>
-      </div>
-
-      <div id="essay-feedback" class="essay-feedback"></div>
-      <div id="timer" class="timer">00:00</div>
-
-      <button class="button" id="next-btn-essay" onclick="loadQuestion()">
-        Next Question
-        <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
-          <path clip-rule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-            fill-rule="evenodd"></path>
-        </svg>
-      </button>
-    </div>
-    <div class="point_box">
-      <p class="point">Số Từ Vựng Đã Nhớ:<span>999</span></p>
-    </div>
-
-    <div class="point_box2">
-      <p class="point2">Streak:<span>999</span></p>
-    </div>
-
-    <div id="explanation-popup" class="popup2" style="display: none;" onclick="closeExplanation()">
+    <!-- Explanation Popup -->
+    <div id="explanation-popup" class="popup2" style="display: none;" onclick="closeExplanation?.()">
       <div class="popup-content2">
         <h3>Giải thích đáp án 📘</h3>
-        <p id="explanation-text">Đang tải...</p>
-        <button onclick="closeExplanation()">Đóng</button>
+        <p id="explanation-text" style="line-height: 1.6; color: var(--text-dim);">Đang tải...</p>
+        <button onclick="closeExplanation?.()">Đóng</button>
       </div>
     </div>
+
+    <!-- Footer -->
     <footer class="footer">
-      <p>&copy; 2025 IT Quiz App | Liên hệ: <a href="https://github.com/oriall">Github: Oriall</a></p>
+      <p>&copy; 2025 Tech Quiz App | Liên hệ: <a href="https://github.com/oriall" target="_blank">Github: Oriall</a></p>
     </footer>
   </div>
 
+  <script>
+    // Loader Animation
+    window.onload = function () {
+      const preloader = document.querySelector('.loader');
+      const mainContent = document.querySelector('#wrapper');
+
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        mainContent.style.display = 'block';
+      }, 2000);
+    };
+
+    // Placeholder functions to prevent errors
+    window.selectSubject = function (subject) {
+      console.log('Selected subject:', subject);
+      document.getElementById('subject-popup').style.display = 'none';
+    };
+
+    window.loadQuestion = function () {
+      console.log('Loading question...');
+    };
+
+    window.closeExplanation = function () {
+      document.getElementById('explanation-popup').style.display = 'none';
+    };
+  </script>
   <script src="script2.js"></script>
 </body>
 
