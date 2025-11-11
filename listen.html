@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Quiz - Listening</title>
+    <link rel="shortcut icon" href="./img/Neko_Gojo_sensei-removebg-preview.png" type="image/x-icon">
+    <link rel="stylesheet" href="./listen.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <!-- Screen 1: Name Input -->
+        <div id="nameScreen" class="screen active">
+            <h1>🎧 Japanese Listening Practice</h1>
+            <p>Luyện nghe tiếng Nhật</p>
+            <div class="input-group">
+                <label>Nhập tên của bạn:</label>
+                <input type="text" id="playerNameInput" placeholder="Tên của bạn..." maxlength="20" />
+            </div>
+            <button class="btn" onclick="submitName()">Bắt đầu</button>
+        </div>
+
+        <!-- Screen 2: Type Selection -->
+        <div id="typeScreen" class="screen">
+            <h1>Chọn dạng bài luyện nghe</h1>
+            <div class="type-selection">
+                <button class="type-card" onclick="selectType('conversation')">
+                    <div class="icon">💬</div>
+                    <h3>Hội thoại</h3>
+                    <p>Luyện nghe đoạn hội thoại</p>
+                </button>
+                <button class="type-card" onclick="selectType('time')">
+                    <div class="icon">🕐</div>
+                    <h3>Giờ</h3>
+                    <p>Luyện nghe thời gian</p>
+                </button>
+                <button class="type-card" onclick="selectType('price')">
+                    <div class="icon">💰</div>
+                    <h3>Giá tiền</h3>
+                    <p>Luyện nghe giá cả</p>
+                </button>
+            </div>
+        </div>
+
+        <!-- Screen 3: Quiz -->
+        <div id="quizScreen" class="screen">
+            <div class="header">
+                <div class="player-info">👤 <span id="playerName">Guest</span></div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Điểm</div>
+                        <div class="stat-value" id="scoreDisplay">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Streak</div>
+                        <div class="stat-value">🔥 <span id="streakDisplay">0</span></div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="icon-btn" onclick="showLeaderboard()" title="Bảng xếp hạng">🏆</button>
+                    <button class="icon-btn" onclick="saveToLeaderboard()" title="Lưu kết quả">💾</button>
+                </div>
+            </div>
+
+            <div id="loadingBox" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Đang tạo câu hỏi...</p>
+            </div>
+
+            <div id="questionContent" style="display: none;">
+                <div class="audio-player">
+                    <button class="play-btn" id="playBtn" onclick="playAudio()">
+                        <span id="playIcon">🔊</span>
+                        <span id="playText">Nghe lại</span>
+                    </button>
+                    <p>Nhấn để nghe đoạn hội thoại</p>
+                </div>
+
+                <div class="question-box">
+                    <h3 id="questionText">Câu hỏi...</h3>
+                    <div class="input-group">
+                        <label id="inputLabel">Nhập câu trả lời của bạn:</label>
+                        <input type="text" id="answerInput" class="answer-input" placeholder="Nhập câu trả lời..." />
+                        <p class="hint-text" id="hintText"></p>
+                    </div>
+                </div>
+
+                <div id="feedbackBox" class="feedback" style="display: none;"></div>
+
+                <div class="btn-group">
+                    <button class="btn" id="submitBtn" onclick="submitAnswer()">Trả lời</button>
+                    <button class="btn" id="nextBtn" onclick="nextQuestion()" style="display: none;">Câu tiếp theo
+                        ➡️</button>
+                </div>
+
+                <div class="back-link" onclick="backToTypeSelection()">← Đổi dạng bài</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderboardModal" class="modal">
+        <div class="modal-content">
+            <h2>🏆 Bảng Xếp Hạng</h2>
+            <div id="leaderboardList"></div>
+            <button class="btn btn-secondary" onclick="closeLeaderboard()">Đóng</button>
+        </div>
+    </div>
+
+    <script>
+        let playerName = '';
+        let listeningType = '';
+        let currentQuestion = null;
+        let score = 0;
+        let streak = 0;
+        let isPlaying = false;
+        let questionHistory = [];
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function submitName() {
+            const input = document.getElementById('playerNameInput');
+            if (input.value.trim()) {
+                playerName = input.value.trim();
+                document.getElementById('playerName').textContent = playerName;
+                showScreen('typeScreen');
+            }
+        }
+
+        document.getElementById('playerNameInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitName();
+        });
+
+        function selectType(type) {
+            listeningType = type;
+            questionHistory = [];
+            showScreen('quizScreen');
+            generateQuestion();
+        }
+
+        async function generateQuestion() {
+            document.getElementById('loadingBox').style.display = 'block';
+            document.getElementById('questionContent').style.display = 'none';
+            document.getElementById('feedbackBox').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            const avoidList = questionHistory.length > 0
+                ? `\n\nTRÁNH LẶP LẠI các câu hỏi sau:\n${questionHistory.map((q, i) => `${i + 1}. ${q}`).join('\n')}\n\nHãy tạo câu hỏi KHÁC HOÀN TOÀN với các câu trên.`
+                : '';
+
+            let prompt = '';
+            if (listeningType === 'conversation') {
+                prompt = `Tạo một bài luyện nghe tiếng Nhật cấp độ N5-N4. Yêu cầu:
+1. Tạo một đoạn hội thoại ngắn 2-3 câu giữa 2 người bằng tiếng Nhật (chỉ dùng Hiragana và Katakana, KHÔNG dùng Kanji)
+2. Đặt 1 câu hỏi về nội dung hội thoại bằng tiếng Việt
+3. Cung cấp đáp án đúng bằng tiếng Việt (câu trả lời ngắn gọn)
+4. Cung cấp các từ khóa chấp nhận (variations) - những cách trả lời tương tự được xem là đúng
+
+Ví dụ hội thoại: "あ：おはようございます。B：おはようございます。きょうはいいてんきですね。"
+${avoidList}
+
+CHỈ trả về JSON format (KHÔNG có markdown, KHÔNG có giải thích thêm):
+{
+  "japanese_text": "đoạn hội thoại tiếng Nhật (chỉ Hiragana/Katakana)",
+  "question": "câu hỏi tiếng Việt",
+  "correct_answer": "đáp án chính xác ngắn gọn",
+  "accepted_variations": ["đáp án 1", "đáp án 2", "đáp án 3"],
+  "explanation": "giải thích ngắn bằng tiếng Việt"
+}`;
+            } else if (listeningType === 'time') {
+                prompt = `Tạo một bài luyện nghe thời gian tiếng Nhật cấp độ N5. Yêu cầu:
+1. Tạo MỘT câu nói về thời gian bằng tiếng Nhật (CHỈ dùng Hiragana, KHÔNG dùng Kanji)
+2. Thời gian phải rõ ràng và đúng ngữ pháp tiếng Nhật
+3. Hỏi người học đây là mấy giờ
+4. Đáp án đúng theo format rõ ràng (ví dụ: "9:30", "9 giờ 30", "9h30")
+5. Cung cấp các cách viết chấp nhận được (với/không dấu cách, có/không có "giờ", v.v.)
+
+Ví dụ: "いまごぜんくじはんです。" (Bây giờ là 9:30 sáng)
+Các từ về giờ: いちじ(1h), にじ(2h), さんじ(3h), よじ(4h), ごじ(5h), ろくじ(6h), しちじ(7h), はちじ(8h), くじ(9h), じゅうじ(10h), じゅういちじ(11h), じゅうにじ(12h)
+はん = 30 phút, ごぜん = sáng (AM), ごご = chiều (PM)
+${avoidList}
+
+CHỈ trả về JSON format (KHÔNG có markdown):
+{
+  "japanese_text": "câu tiếng Nhật về giờ (chỉ Hiragana)",
+  "question": "Đây là mấy giờ?",
+  "correct_answer": "9:30",
+  "accepted_variations": ["9:30", "9h30", "9 giờ 30", "930"],
+  "explanation": "Đáp án là 9:30 sáng (ごぜんくじはん)"
+}`;
+            } else if (listeningType === 'price') {
+                prompt = `Tạo một bài luyện nghe giá tiền tiếng Nhật cấp độ N5. Yêu cầu:
+1. Tạo MỘT câu nói về giá một món đồ bằng tiếng Nhật (CHỈ dùng Hiragana và Katakana, KHÔNG dùng Kanji)
+2. Giá tiền phải rõ ràng và đúng cách đọc số tiền trong tiếng Nhật
+3. Hỏi người học giá bao nhiêu
+4. Đáp án đúng theo format số (ví dụ: "1000", "1000 yên", "1000円")
+5. Cung cấp các cách viết chấp nhận được
+
+Ví dụ: "このほんはせんえんです。" (Quyển sách này giá 1000 yên)
+Các số tiền: ひゃくえん(100円), にひゃくえん(200円), さんびゃくえん(300円), よんひゃくえん(400円), ごひゃくえん(500円), ろっぴゃくえん(600円), ななひゃくえん(700円), はっぴゃくえん(800円), きゅうひゃくえん(900円), せんえん(1000円), にせんえん(2000円), さんぜんえん(3000円)
+${avoidList}
+
+CHỈ trả về JSON format (KHÔNG có markdown):
+{
+  "japanese_text": "câu tiếng Nhật về giá tiền (chỉ Hiragana/Katakana)",
+  "question": "Món đồ này giá bao nhiêu?",
+  "correct_answer": "1000",
+  "accepted_variations": ["1000", "1000 yên", "1000円", "1000 yen"],
+  "explanation": "Đáp án là 1000 yên (せんえん)"
+}`;
+            }
+
+            try {
+                const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCbWfOla29VASM0_jlfPIhUCqeCyaZA5jU", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                let textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+                if (!textResponse) {
+                    throw new Error('No response from API');
+                }
+
+                textResponse = textResponse.replace(/```json\n?|```\n?/g, "").trim();
+
+                try {
+                    currentQuestion = JSON.parse(textResponse);
+                } catch (parseError) {
+                    const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) {
+                        currentQuestion = JSON.parse(jsonMatch[0]);
+                    } else {
+                        throw new Error('Cannot parse JSON response');
+                    }
+                }
+
+                if (!currentQuestion.japanese_text || !currentQuestion.question || !currentQuestion.correct_answer) {
+                    throw new Error('Invalid question structure');
+                }
+
+                questionHistory.push(currentQuestion.japanese_text);
+                if (questionHistory.length > 20) {
+                    questionHistory.shift();
+                }
+
+                displayQuestion();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Không thể tạo câu hỏi. Vui lòng thử lại!');
+                document.getElementById('loadingBox').style.display = 'none';
+                backToTypeSelection();
+            }
+        }
+
+        function displayQuestion() {
+            document.getElementById('loadingBox').style.display = 'none';
+            document.getElementById('questionContent').style.display = 'block';
+
+            if (!currentQuestion || !currentQuestion.question) {
+                alert('❌ Không thể tải câu hỏi. Vui lòng thử lại!');
+                return;
+            }
+
+            document.getElementById('questionText').textContent = currentQuestion.question;
+
+            const answerInput = document.getElementById('answerInput');
+            answerInput.value = '';
+            answerInput.disabled = false;
+
+            if (listeningType === 'time') {
+                answerInput.placeholder = 'Ví dụ: 9:30 hoặc 9 giờ 30';
+                document.getElementById('inputLabel').textContent = 'Nhập thời gian:';
+                document.getElementById('hintText').textContent = 'Gợi ý: Bạn có thể nhập theo nhiều cách như "9:30", "9h30", "9 giờ 30"';
+            } else if (listeningType === 'price') {
+                answerInput.placeholder = 'Ví dụ: 1000 hoặc 1000 yên';
+                document.getElementById('inputLabel').textContent = 'Nhập giá tiền:';
+                document.getElementById('hintText').textContent = 'Gợi ý: Chỉ cần nhập số, có thể thêm "yên" hoặc "円"';
+            } else {
+                answerInput.placeholder = 'Nhập câu trả lời...';
+                document.getElementById('inputLabel').textContent = 'Nhập câu trả lời của bạn:';
+                document.getElementById('hintText').textContent = 'Gợi ý: Nghe kỹ và trả lời ngắn gọn';
+            }
+
+            setTimeout(() => {
+                playAudio();
+                setTimeout(() => answerInput.focus(), 1000);
+            }, 500);
+        }
+
+        function normalizeAnswer(answer) {
+            return answer.toLowerCase()
+                .trim()
+                .replace(/\s+/g, '')
+                .replace(/[.,!?;:]/g, '')
+                .replace(/円/g, '')
+                .replace(/yen/g, '')
+                .replace(/yên/g, '')
+                .replace(/giờ/g, '')
+                .replace(/phút/g, '')
+                .replace(/h/g, '')
+                .replace(/:/g, '');
+        }
+
+        function checkAnswer(userAnswer) {
+            const normalizedUser = normalizeAnswer(userAnswer);
+            const normalizedCorrect = normalizeAnswer(currentQuestion.correct_answer);
+
+            if (normalizedUser === normalizedCorrect) {
+                return true;
+            }
+
+            if (currentQuestion.accepted_variations && Array.isArray(currentQuestion.accepted_variations)) {
+                for (let variation of currentQuestion.accepted_variations) {
+                    if (normalizeAnswer(variation) === normalizedUser) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        function submitAnswer() {
+            const answerInput = document.getElementById('answerInput');
+            const userAnswer = answerInput.value.trim();
+
+            if (!userAnswer) {
+                alert('Vui lòng nhập câu trả lời!');
+                return;
+            }
+
+            const feedbackBox = document.getElementById('feedbackBox');
+            const isCorrect = checkAnswer(userAnswer);
+
+            if (isCorrect) {
+                score += 10;
+                streak++;
+                feedbackBox.className = 'feedback correct';
+                feedbackBox.innerHTML = `✅ Chính xác!<br><strong>Đáp án:</strong> ${currentQuestion.correct_answer}<br>${currentQuestion.explanation || ''}`;
+            } else {
+                streak = 0;
+                feedbackBox.className = 'feedback incorrect';
+                feedbackBox.innerHTML = `❌ Sai rồi!<br><strong>Bạn trả lời:</strong> ${userAnswer}<br><strong>Đáp án đúng:</strong> ${currentQuestion.correct_answer}<br>${currentQuestion.explanation || ''}`;
+            }
+
+            feedbackBox.style.display = 'block';
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'block';
+            document.getElementById('scoreDisplay').textContent = score;
+            document.getElementById('streakDisplay').textContent = streak;
+
+            answerInput.disabled = true;
+        }
+
+        function nextQuestion() {
+            generateQuestion();
+        }
+
+        function playAudio() {
+            if (!currentQuestion || isPlaying) return;
+
+            isPlaying = true;
+            const playBtn = document.getElementById('playBtn');
+            playBtn.disabled = true;
+            playBtn.classList.add('playing');
+            document.getElementById('playText').textContent = 'Đang phát...';
+
+            const utterance = new SpeechSynthesisUtterance(currentQuestion.japanese_text);
+            utterance.lang = 'ja-JP';
+            utterance.rate = 0.8;
+            utterance.pitch = 1;
+
+            utterance.onend = () => {
+                isPlaying = false;
+                playBtn.disabled = false;
+                playBtn.classList.remove('playing');
+                document.getElementById('playText').textContent = 'Nghe lại';
+            };
+
+            utterance.onerror = () => {
+                isPlaying = false;
+                playBtn.disabled = false;
+                playBtn.classList.remove('playing');
+                document.getElementById('playText').textContent = 'Nghe lại';
+                alert('⚠️ Không thể phát âm thanh. Trình duyệt của bạn có thể không hỗ trợ giọng nói tiếng Nhật.');
+            };
+
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function backToTypeSelection() {
+            showScreen('typeScreen');
+        }
+
+        async function loadLeaderboard() {
+            try {
+                const result = await window.storage.get('japanese-listening-leaderboard', true);
+                return result && result.value ? JSON.parse(result.value) : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        async function saveToLeaderboard() {
+            if (!playerName || score === 0) {
+                alert('⚠️ Bạn cần có điểm trước khi lưu!');
+                return;
+            }
+
+            const newEntry = {
+                name: playerName,
+                score: score,
+                streak: streak,
+                timestamp: Date.now()
+            };
+
+            let leaderboard = await loadLeaderboard();
+            leaderboard.push(newEntry);
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 10);
+
+            try {
+                await window.storage.set('japanese-listening-leaderboard', JSON.stringify(leaderboard), true);
+                alert('✅ Đã lưu kết quả vào bảng xếp hạng!');
+            } catch (error) {
+                alert('❌ Không thể lưu kết quả');
+            }
+        }
+
+        async function showLeaderboard() {
+            const leaderboard = await loadLeaderboard();
+            const list = document.getElementById('leaderboardList');
+
+            if (leaderboard.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">Chưa có dữ liệu</p>';
+            } else {
+                list.innerHTML = leaderboard.map((entry, index) => `
+          <div class="leaderboard-item">
+            <div class="leaderboard-rank">#${index + 1}</div>
+            <div class="leaderboard-info">
+              <div class="leaderboard-name">${entry.name}</div>
+              <div class="leaderboard-streak">Streak: 🔥 ${entry.streak}</div>
+            </div>
+            <div class="leaderboard-score">${entry.score}</div>
+          </div>
+        `).join('');
+            }
+
+            document.getElementById('leaderboardModal').classList.add('active');
+        }
+
+        function closeLeaderboard() {
+            document.getElementById('leaderboardModal').classList.remove('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const answerInput = document.getElementById('answerInput');
+            if (answerInput) {
+                answerInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !answerInput.disabled) {
+                        submitAnswer();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
