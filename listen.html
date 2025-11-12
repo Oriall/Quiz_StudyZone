@@ -140,8 +140,131 @@
         function selectType(type) {
             listeningType = type;
             questionHistory = [];
+            score = 0;
+            streak = 0;
+            document.getElementById('scoreDisplay').textContent = '0';
+            document.getElementById('streakDisplay').textContent = '0';
             showScreen('quizScreen');
             generateQuestion();
+        }
+
+        function numberToJapanese(num) {
+            const ones = ['', 'いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう'];
+            const tens = ['', 'じゅう', 'にじゅう', 'さんじゅう', 'よんじゅう', 'ごじゅう'];
+
+            if (num === 0) return 'ぜろ';
+            if (num < 10) return ones[num];
+            if (num < 60) {
+                const t = Math.floor(num / 10);
+                const o = num % 10;
+                return tens[t] + (o > 0 ? ones[o] : '');
+            }
+
+            let result = '';
+            if (num >= 10000) {
+                const man = Math.floor(num / 10000);
+                result += (man === 1 ? 'いち' : numberToJapanese(man)) + 'まん';
+                num %= 10000;
+            }
+            if (num >= 1000) {
+                const sen = Math.floor(num / 1000);
+                if (sen === 1) result += 'せん';
+                else if (sen === 3) result += 'さんぜん';
+                else if (sen === 8) result += 'はっせん';
+                else result += ones[sen] + 'せん';
+                num %= 1000;
+            }
+            if (num >= 100) {
+                const hyaku = Math.floor(num / 100);
+                if (hyaku === 1) result += 'ひゃく';
+                else if (hyaku === 3) result += 'さんびゃく';
+                else if (hyaku === 6) result += 'ろっぴゃく';
+                else if (hyaku === 8) result += 'はっぴゃく';
+                else result += ones[hyaku] + 'ひゃく';
+                num %= 100;
+            }
+            if (num >= 10) {
+                const t = Math.floor(num / 10);
+                result += tens[t];
+                num %= 10;
+            }
+            if (num > 0) result += ones[num];
+
+            return result;
+        }
+
+        function generateTimeQuestion() {
+            const hour = Math.floor(Math.random() * 12) + 1;
+            const minute = Math.floor(Math.random() * 60);
+            const isPM = Math.random() > 0.5;
+
+            const hourWords = ['', 'いちじ', 'にじ', 'さんじ', 'よじ', 'ごじ', 'ろくじ',
+                'しちじ', 'はちじ', 'くじ', 'じゅうじ', 'じゅういちじ', 'じゅうにじ'];
+
+            let japanese = 'いまは' + (isPM ? 'ごご' : 'ごぜん') + hourWords[hour];
+
+            let minuteText = '';
+            if (minute === 0) {
+                minuteText = '';
+            } else if (minute === 30) {
+                minuteText = 'はん';
+            } else {
+                minuteText = numberToJapanese(minute) + 'ふん';
+            }
+
+            japanese += minuteText + 'です';
+
+            const hourStr = hour.toString();
+            const minuteStr = minute.toString().padStart(2, '0');
+            const period = isPM ? ' chiều' : ' sáng';
+
+            return {
+                japanese_text: japanese,
+                question: 'Đây là mấy giờ?',
+                correct_answer: `${hourStr}:${minuteStr}`,
+                hour: hour,
+                minute: minute,
+                period: isPM ? 'PM' : 'AM',
+                accepted_variations: [
+                    `${hourStr}:${minuteStr}`,
+                    `${hourStr}h${minuteStr}`,
+                    `${hourStr} giờ ${minute}`,
+                    `${hourStr}:${minuteStr}${period}`,
+                    `${hourStr}h${minuteStr}${period}`
+                ],
+                explanation: `Đáp án là ${hourStr}:${minuteStr}${period}`
+            };
+        }
+
+        function generatePriceQuestion() {
+            const priceOptions = [
+                100, 200, 300, 400, 500, 600, 700, 800, 900,
+                1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000,
+                6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000
+            ];
+            const price = priceOptions[Math.floor(Math.random() * priceOptions.length)];
+
+            const items = [
+                'このほん', 'このペン', 'このノート', 'このかばん', 'このとけい',
+                'このくつ', 'このシャツ', 'このかさ', 'このぼうし', 'このカメラ'
+            ];
+            const item = items[Math.floor(Math.random() * items.length)];
+
+            const japanese = item + 'は' + numberToJapanese(price) + 'えんです';
+
+            return {
+                japanese_text: japanese,
+                question: 'Món đồ này giá bao nhiêu?',
+                correct_answer: price.toString(),
+                accepted_variations: [
+                    price.toString(),
+                    `${price} yên`,
+                    `${price} yen`,
+                    `${price}円`,
+                    `${price}yên`
+                ],
+                explanation: `Đáp án là ${price} yên`
+            };
         }
 
         async function generateQuestion() {
@@ -151,19 +274,24 @@
             document.getElementById('submitBtn').style.display = 'block';
             document.getElementById('nextBtn').style.display = 'none';
 
-            const avoidList = questionHistory.length > 0
-                ? `\n\nTRÁNH LẶP LẠI các câu hỏi sau:\n${questionHistory.map((q, i) => `${i + 1}. ${q}`).join('\n')}\n\nHãy tạo câu hỏi KHÁC HOÀN TOÀN với các câu trên.`
-                : '';
+            if (listeningType === 'time') {
+                currentQuestion = generateTimeQuestion();
+                displayQuestion();
+            } else if (listeningType === 'price') {
+                currentQuestion = generatePriceQuestion();
+                displayQuestion();
+            } else if (listeningType === 'conversation') {
+                const avoidList = questionHistory.length > 0
+                    ? `\n\nTRÁNH LẶP LẠI các câu hỏi sau:\n${questionHistory.map((q, i) => `${i + 1}. ${q}`).join('\n')}\n\nHãy tạo câu hỏi KHÁC HOÀN TOÀN với các câu trên.`
+                    : '';
 
-            let prompt = '';
-            if (listeningType === 'conversation') {
-                prompt = `Tạo một bài luyện nghe tiếng Nhật cấp độ N5-N4. Yêu cầu:
+                let prompt = `Tạo một bài luyện nghe tiếng Nhật cấp độ N5-N4. Yêu cầu:
 1. Tạo một đoạn hội thoại ngắn 2-3 câu giữa 2 người bằng tiếng Nhật (chỉ dùng Hiragana và Katakana, KHÔNG dùng Kanji)
 2. Đặt 1 câu hỏi về nội dung hội thoại bằng tiếng Việt
 3. Cung cấp đáp án đúng bằng tiếng Việt (câu trả lời ngắn gọn)
 4. Cung cấp các từ khóa chấp nhận (variations) - những cách trả lời tương tự được xem là đúng
 
-Ví dụ hội thoại: "あ：おはようございます。B：おはようございます。きょうはいいてんきですね。"
+Ví dụ hội thoại: "A：おはようございます。B：おはようございます。きょうはいいてんきですね。"
 ${avoidList}
 
 CHỈ trả về JSON format (KHÔNG có markdown, KHÔNG có giải thích thêm):
@@ -174,97 +302,56 @@ CHỈ trả về JSON format (KHÔNG có markdown, KHÔNG có giải thích thê
   "accepted_variations": ["đáp án 1", "đáp án 2", "đáp án 3"],
   "explanation": "giải thích ngắn bằng tiếng Việt"
 }`;
-            } else if (listeningType === 'time') {
-                prompt = `Tạo một bài luyện nghe thời gian tiếng Nhật cấp độ N5. Yêu cầu:
-1. Tạo MỘT câu nói về thời gian bằng tiếng Nhật (CHỈ dùng Hiragana, KHÔNG dùng Kanji)
-2. Thời gian phải rõ ràng và đúng ngữ pháp tiếng Nhật
-3. Hỏi người học đây là mấy giờ
-4. Đáp án đúng theo format rõ ràng (ví dụ: "9:30", "9 giờ 30", "9h30")
-5. Cung cấp các cách viết chấp nhận được (với/không dấu cách, có/không có "giờ", v.v.)
-
-Ví dụ: "いまごぜんくじはんです。" (Bây giờ là 9:30 sáng)
-Các từ về giờ: いちじ(1h), にじ(2h), さんじ(3h), よじ(4h), ごじ(5h), ろくじ(6h), しちじ(7h), はちじ(8h), くじ(9h), じゅうじ(10h), じゅういちじ(11h), じゅうにじ(12h)
-はん = 30 phút, ごぜん = sáng (AM), ごご = chiều (PM)
-${avoidList}
-
-CHỈ trả về JSON format (KHÔNG có markdown):
-{
-  "japanese_text": "câu tiếng Nhật về giờ (chỉ Hiragana)",
-  "question": "Đây là mấy giờ?",
-  "correct_answer": "9:30",
-  "accepted_variations": ["9:30", "9h30", "9 giờ 30", "930"],
-  "explanation": "Đáp án là 9:30 sáng (ごぜんくじはん)"
-}`;
-            } else if (listeningType === 'price') {
-                prompt = `Tạo một bài luyện nghe giá tiền tiếng Nhật cấp độ N5. Yêu cầu:
-1. Tạo MỘT câu nói về giá một món đồ bằng tiếng Nhật (CHỈ dùng Hiragana và Katakana, KHÔNG dùng Kanji)
-2. Giá tiền phải rõ ràng và đúng cách đọc số tiền trong tiếng Nhật
-3. Hỏi người học giá bao nhiêu
-4. Đáp án đúng theo format số (ví dụ: "1000", "1000 yên", "1000円")
-5. Cung cấp các cách viết chấp nhận được
-
-Ví dụ: "このほんはせんえんです。" (Quyển sách này giá 1000 yên)
-Các số tiền: ひゃくえん(100円), にひゃくえん(200円), さんびゃくえん(300円), よんひゃくえん(400円), ごひゃくえん(500円), ろっぴゃくえん(600円), ななひゃくえん(700円), はっぴゃくえん(800円), きゅうひゃくえん(900円), せんえん(1000円), にせんえん(2000円), さんぜんえん(3000円)
-${avoidList}
-
-CHỈ trả về JSON format (KHÔNG có markdown):
-{
-  "japanese_text": "câu tiếng Nhật về giá tiền (chỉ Hiragana/Katakana)",
-  "question": "Món đồ này giá bao nhiêu?",
-  "correct_answer": "1000",
-  "accepted_variations": ["1000", "1000 yên", "1000円", "1000 yen"],
-  "explanation": "Đáp án là 1000 yên (せんえん)"
-}`;
-            }
-
-            try {
-                const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCbWfOla29VASM0_jlfPIhUCqeCyaZA5jU", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                let textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-
-                if (!textResponse) {
-                    throw new Error('No response from API');
-                }
-
-                textResponse = textResponse.replace(/```json\n?|```\n?/g, "").trim();
 
                 try {
-                    currentQuestion = JSON.parse(textResponse);
-                } catch (parseError) {
-                    const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
-                    if (jsonMatch) {
-                        currentQuestion = JSON.parse(jsonMatch[0]);
-                    } else {
-                        throw new Error('Cannot parse JSON response');
+                    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyCbWfOla29VASM0_jlfPIhUCqeCyaZA5jU", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                }
 
-                if (!currentQuestion.japanese_text || !currentQuestion.question || !currentQuestion.correct_answer) {
-                    throw new Error('Invalid question structure');
-                }
+                    const data = await response.json();
+                    let textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
-                questionHistory.push(currentQuestion.japanese_text);
-                if (questionHistory.length > 20) {
-                    questionHistory.shift();
-                }
+                    if (!textResponse) {
+                        throw new Error('No response from API');
+                    }
 
-                displayQuestion();
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ Không thể tạo câu hỏi. Vui lòng thử lại!');
-                document.getElementById('loadingBox').style.display = 'none';
-                backToTypeSelection();
+                    textResponse = textResponse.replace(/```json\n?|```\n?/g, "").trim();
+
+                    try {
+                        currentQuestion = JSON.parse(textResponse);
+                    } catch (parseError) {
+                        const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
+                        if (jsonMatch) {
+                            currentQuestion = JSON.parse(jsonMatch[0]);
+                        } else {
+                            throw new Error('Cannot parse JSON response');
+                        }
+                    }
+
+                    if (!currentQuestion.japanese_text || !currentQuestion.question || !currentQuestion.correct_answer) {
+                        throw new Error('Invalid question structure');
+                    }
+
+                    questionHistory.push(currentQuestion.japanese_text);
+                    if (questionHistory.length > 20) {
+                        questionHistory.shift();
+                    }
+
+                    displayQuestion();
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('❌ Không thể tạo câu hỏi. Vui lòng thử lại!');
+                    document.getElementById('loadingBox').style.display = 'none';
+                    backToTypeSelection();
+                }
             }
         }
 
@@ -314,7 +401,11 @@ CHỈ trả về JSON format (KHÔNG có markdown):
                 .replace(/giờ/g, '')
                 .replace(/phút/g, '')
                 .replace(/h/g, '')
-                .replace(/:/g, '');
+                .replace(/:/g, '')
+                .replace(/sáng/g, '')
+                .replace(/chiều/g, '')
+                .replace(/am/g, '')
+                .replace(/pm/g, '');
         }
 
         function checkAnswer(userAnswer) {
@@ -452,15 +543,15 @@ CHỈ trả về JSON format (KHÔNG có markdown):
                 list.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">Chưa có dữ liệu</p>';
             } else {
                 list.innerHTML = leaderboard.map((entry, index) => `
-          <div class="leaderboard-item">
-            <div class="leaderboard-rank">#${index + 1}</div>
-            <div class="leaderboard-info">
-              <div class="leaderboard-name">${entry.name}</div>
-              <div class="leaderboard-streak">Streak: 🔥 ${entry.streak}</div>
-            </div>
-            <div class="leaderboard-score">${entry.score}</div>
-          </div>
-        `).join('');
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank">#${index + 1}</div>
+                        <div class="leaderboard-info">
+                            <div class="leaderboard-name">${entry.name}</div>
+                            <div class="leaderboard-streak">Streak: 🔥 ${entry.streak}</div>
+                        </div>
+                        <div class="leaderboard-score">${entry.score}</div>
+                    </div>
+                `).join('');
             }
 
             document.getElementById('leaderboardModal').classList.add('active');
