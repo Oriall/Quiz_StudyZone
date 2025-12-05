@@ -237,12 +237,23 @@
         }
 
         function generatePriceQuestion() {
-            const priceOptions = [
-                100, 200, 300, 400, 500, 600, 700, 800, 900,
-                1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000,
-                6000, 7000, 8000, 9000, 10000, 15000, 20000, 50000, 100000
-            ];
-            const price = priceOptions[Math.floor(Math.random() * priceOptions.length)];
+            // Tạo số ngẫu nhiên phức tạp theo các mức giá khác nhau
+            let price;
+            const priceType = Math.random();
+
+            if (priceType < 0.3) {
+                // Giá rẻ: 50-999 yên
+                price = Math.floor(Math.random() * 950) + 50;
+            } else if (priceType < 0.6) {
+                // Giá trung bình: 1,000-9,999 yên
+                price = Math.floor(Math.random() * 9000) + 1000;
+            } else if (priceType < 0.85) {
+                // Giá cao: 10,000-99,999 yên
+                price = Math.floor(Math.random() * 90000) + 10000;
+            } else {
+                // Giá rất cao: 100,000-999,999 yên
+                price = Math.floor(Math.random() * 900000) + 100000;
+            }
 
             const items = [
                 'このほん', 'このペン', 'このノート', 'このかばん', 'このとけい',
@@ -261,9 +272,11 @@
                     `${price} yên`,
                     `${price} yen`,
                     `${price}円`,
-                    `${price}yên`
+                    `${price}yên`,
+                    price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","), // Thêm dấu phẩy: 1,234
+                    price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") // Thêm dấu chấm: 1.234
                 ],
-                explanation: `Đáp án là ${price} yên`
+                explanation: `Đáp án là ${price.toLocaleString('vi-VN')} yên`
             };
         }
 
