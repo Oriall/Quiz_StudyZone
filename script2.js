@@ -16,7 +16,7 @@ const vocabularyData = [
   { id: 13, hiragana: "なんばん", kanji: "何番", meaning: "số mấy" },
   { id: 14, hiragana: "いま", kanji: "今", meaning: "bây giờ" },
   { id: 15, hiragana: "じ", kanji: "～時", meaning: "~giờ" },
-  { id: 16, hiragana: "ふん / ～ぷん", kanji: "～分", meaning: "～phút" },
+  { id: 16, hiragana: "ぷん", kanji: "～分", meaning: "～phút" },
   { id: 17, hiragana: "はん", kanji: "半", meaning: "phân nửa" },
   { id: 18, hiragana: "なんじ", kanji: "何時", meaning: "mấy giờ" },
   { id: 19, hiragana: "なんぷん", kanji: "何分", meaning: "mấy phút" },
@@ -106,7 +106,7 @@ const vocabularyData = [
   // Bài 6
   { id: 100, hiragana: "たべます", kanji: "食べます", meaning: "ăn" },
   { id: 101, hiragana: "のみます", kanji: "飲みます", meaning: "uống" },
-  { id: 102, hiragana: "すいます [たばこを～]", kanji: "吸います", meaning: "hút [thuốc lá]" },
+  { id: 102, hiragana: "すいます", kanji: "吸います", meaning: "hút [thuốc lá]" },
   { id: 103, hiragana: "みます", kanji: "見ます", meaning: "xem, nhìn, trông" },
   { id: 104, hiragana: "ききます", kanji: "聞きます", meaning: "nghe" },
   { id: 105, hiragana: "よみます", kanji: "読みます", meaning: "đọc" },
@@ -944,7 +944,7 @@ function generateJapaneseEssay() {
   const correctWord = wordsToUse[Math.floor(Math.random() * wordsToUse.length)];
 
   const questionData = {
-    question: `Hãy viết từ "${correctWord.meaning}" bằng chữ Hiragana:`,
+    question: `Hãy viết từ "${correctWord.meaning}" bằng chữ Hiragana(Katakana):`,
     answer: correctWord.hiragana,
     explanation: `Đáp án đúng là "${correctWord.hiragana}"${correctWord.kanji ? ` (${correctWord.kanji})` : ''} có nghĩa là "${correctWord.meaning}".`,
     kanji: correctWord.kanji

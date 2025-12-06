@@ -6,9 +6,9 @@
 // 4. QUAN TRỌNG: Phải copy TOÀN BỘ key, bao gồm cả ký tự đặc biệt
 
 const JSONBIN_CONFIG = {
-  binId: "690bce3eae596e708f472b94",  // Thay bằng Bin ID của bạn
-  accessKey: "$2a$10$0Li0FCP0GlRmju3r2JAjZeE3VAf5g/l7NisjldP1zXzOAKwSFFQs6", // X-Access-Key từ JSONBin
-  masterKey: "$2a$10$ipP0.Em3T.SRQaousDsWQeAERtc5Pt9pNCGOYdewJMOYErROd32Iu"  // X-Master-Key (nếu cần write)
+  binId: "6933fe07ae596e708f87252c",  // Thay bằng Bin ID của bạn
+  accessKey: "$2a$10$e4JzkEKkno0sbI0nF/y08ujeA70ISgyY.UzrLJf4Cbxfx6P2WwN3i", // X-Access-Key từ JSONBin
+  masterKey: "$2a$10$mzoA.ijU1UI.bWQIc4xn2.sBKp/ups4a3rgCBo3tjiIlFSVZrZh6a"  // X-Master-Key (nếu cần write)
 };
 
 
