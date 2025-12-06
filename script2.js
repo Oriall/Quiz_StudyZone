@@ -254,302 +254,294 @@ const vocabularyData = [
 ];
 // ==================== BỘ DATA KANJI (Bộ 2) ====================
 const kanjiData = [
-  { 
-    id: 1, 
-    kanji: "日", 
-    meaning: "mặt trời, ngày", 
-    onyomi: "ニチ、ジツ", 
+  {
+    id: 1,
+    kanji: "日",
+    meaning: "mặt trời, ngày",
+    onyomi: "にち、じつ",
     kunyomi: "ひ、か",
     examples: ["日本 (にほん) - Nhật Bản", "毎日 (まいにち) - mỗi ngày"]
   },
-  { 
-    id: 2, 
-    kanji: "月", 
-    meaning: "mặt trăng, tháng", 
-    onyomi: "ゲツ、ガツ", 
+  {
+    id: 2,
+    kanji: "月",
+    meaning: "mặt trăng, tháng",
+    onyomi: "げつ、がつ",
     kunyomi: "つき",
     examples: ["月曜日 (げつようび) - thứ hai", "一月 (いちがつ) - tháng một"]
   },
-  { 
-    id: 3, 
-    kanji: "火", 
-    meaning: "lửa", 
-    onyomi: "カ", 
+  {
+    id: 3,
+    kanji: "火",
+    meaning: "lửa",
+    onyomi: "か",
     kunyomi: "ひ",
     examples: ["火曜日 (かようび) - thứ ba", "火事 (かじ) - hỏa hoạn"]
   },
-  { 
-    id: 4, 
-    kanji: "水", 
-    meaning: "nước", 
-    onyomi: "スイ", 
+  {
+    id: 4,
+    kanji: "水",
+    meaning: "nước",
+    onyomi: "すい",
     kunyomi: "みず",
     examples: ["水曜日 (すいようび) - thứ tư", "水道 (すいどう) - vòi nước"]
   },
-  { 
-    id: 5, 
-    kanji: "木", 
-    meaning: "cây, gỗ", 
-    onyomi: "モク、ボク", 
+  {
+    id: 5,
+    kanji: "木",
+    meaning: "cây, gỗ",
+    onyomi: "もく、ぼく",
     kunyomi: "き",
     examples: ["木曜日 (もくようび) - thứ năm", "木材 (もくざい) - gỗ"]
   },
-  { 
-    id: 6, 
-    kanji: "金", 
-    meaning: "vàng, tiền", 
-    onyomi: "キン、コン", 
+  {
+    id: 6,
+    kanji: "金",
+    meaning: "vàng, tiền",
+    onyomi: "きん、こん",
     kunyomi: "かね",
     examples: ["金曜日 (きんようび) - thứ sáu", "お金 (おかね) - tiền"]
   },
-  { 
-    id: 7, 
-    kanji: "土", 
-    meaning: "đất", 
-    onyomi: "ド、ト", 
+  {
+    id: 7,
+    kanji: "土",
+    meaning: "đất",
+    onyomi: "ど、と",
     kunyomi: "つち",
     examples: ["土曜日 (どようび) - thứ bảy", "土地 (とち) - đất đai"]
   },
-  { 
-    id: 8, 
-    kanji: "人", 
-    meaning: "người", 
-    onyomi: "ジン、ニン", 
+  {
+    id: 8,
+    kanji: "人",
+    meaning: "người",
+    onyomi: "じん、にん",
     kunyomi: "ひと",
     examples: ["日本人 (にほんじん) - người Nhật", "人気 (にんき) - phổ biến"]
   },
-  { 
-    id: 9, 
-    kanji: "山", 
-    meaning: "núi", 
-    onyomi: "サン", 
+  {
+    id: 9,
+    kanji: "山",
+    meaning: "núi",
+    onyomi: "さん",
     kunyomi: "やま",
     examples: ["富士山 (ふじさん) - núi Phú Sĩ", "山田 (やまだ) - Yamada"]
   },
-  { 
-    id: 10, 
-    kanji: "川", 
-    meaning: "sông", 
-    onyomi: "セン", 
+  {
+    id: 10,
+    kanji: "川",
+    meaning: "sông",
+    onyomi: "せん",
     kunyomi: "かわ",
     examples: ["川口 (かわぐち) - Kawaguchi", "小川 (おがわ) - con suối"]
   },
-  { 
-    id: 11, 
-    kanji: "一", 
-    meaning: "một", 
-    onyomi: "いち、いつ", 
+  {
+    id: 11,
+    kanji: "一",
+    meaning: "một",
+    onyomi: "いち、いつ",
     kunyomi: "",
     examples: ["一つ (ひとつ) - một cái", "一月 (いちがつ) - tháng một"]
   },
-  { 
-    id: 12, 
-    kanji: "二", 
-    meaning: "hai", 
-    onyomi: "に", 
+  {
+    id: 12,
+    kanji: "二",
+    meaning: "hai",
+    onyomi: "に",
     kunyomi: "",
     examples: ["二つ (ふたつ) - hai cái", "二月 (にがつ) - tháng hai"]
   },
-  { 
-    id: 13, 
-    kanji: "三", 
-    meaning: "ba", 
-    onyomi: "さん", 
+  {
+    id: 13,
+    kanji: "三",
+    meaning: "ba",
+    onyomi: "さん",
     kunyomi: "",
     examples: ["三つ (みっつ) - ba cái", "三月 (さんがつ) - tháng ba"]
   },
-  { 
-    id: 14, 
-    kanji: "四", 
-    meaning: "bốn", 
-    onyomi: "し", 
+  {
+    id: 14,
+    kanji: "四",
+    meaning: "bốn",
+    onyomi: "し",
     kunyomi: "",
     examples: ["四つ (よっつ) - bốn cái", "四月 (しがつ) - tháng tư"]
   },
-  { 
-    id: 15, 
-    kanji: "五", 
-    meaning: "năm", 
-    onyomi: "ご", 
+  {
+    id: 15,
+    kanji: "五",
+    meaning: "năm",
+    onyomi: "ご",
     kunyomi: "",
     examples: ["五つ (いつつ) - năm cái", "五月 (ごがつ) - tháng năm"]
   },
-  { 
-    id: 16, 
-    kanji: "六", 
-    meaning: "sáu", 
-    onyomi: "ろく", 
+  {
+    id: 16,
+    kanji: "六",
+    meaning: "sáu",
+    onyomi: "ろく",
     kunyomi: "",
     examples: ["六つ (むっつ) - sáu cái", "六月 (ろくがつ) - tháng sáu"]
   },
-  { 
-    id: 17, 
-    kanji: "七", 
-    meaning: "bảy", 
-    onyomi: "しち", 
+  {
+    id: 17,
+    kanji: "七",
+    meaning: "bảy",
+    onyomi: "しち",
     kunyomi: "",
     examples: ["七つ (ななつ) - bảy cái", "七月 (しちがつ) - tháng bảy"]
   },
-  { 
-    id: 18, 
-    kanji: "八", 
-    meaning: "tám", 
-    onyomi: "はち", 
+  {
+    id: 18,
+    kanji: "八",
+    meaning: "tám",
+    onyomi: "はち",
     kunyomi: "",
     examples: ["八つ (やっつ) - tám cái", "八月 (はちがつ) - tháng tám"]
   },
-  { 
-    id: 19, 
-    kanji: "九", 
-    meaning: "chín", 
-    onyomi: "きゅう、く", 
+  {
+    id: 19,
+    kanji: "九",
+    meaning: "chín",
+    onyomi: "きゅう、く",
     kunyomi: "",
     examples: ["九つ (ここのつ) - chín cái", "九月 (くがつ) - tháng chín"]
   },
-  { 
-    id: 20, 
-    kanji: "十", 
-    meaning: "mười", 
-    onyomi: "じゅう", 
+  {
+    id: 20,
+    kanji: "十",
+    meaning: "mười",
+    onyomi: "じゅう",
     kunyomi: "",
     examples: ["十 (じゅう) - mười", "十月 (じゅうがつ) - tháng mười"]
   },
-  { 
-    id: 21, 
-    kanji: "百", 
-    meaning: "trăm", 
-    onyomi: "ひゃく", 
+  {
+    id: 21,
+    kanji: "百",
+    meaning: "trăm",
+    onyomi: "ひゃく",
     kunyomi: "",
     examples: ["百円 (ひゃくえん) - 100 yên", "三百 (さんびゃく) - 300"]
   },
-  { 
-    id: 22, 
-    kanji: "千", 
-    meaning: "nghìn", 
-    onyomi: "せん", 
+  {
+    id: 22,
+    kanji: "千",
+    meaning: "nghìn",
+    onyomi: "せん",
     kunyomi: "",
     examples: ["千円 (せんえん) - 1000 yên", "三千 (さんぜん) - 3000"]
   },
-  { 
-    id: 23, 
-    kanji: "万", 
-    meaning: "vạn (mười nghìn)", 
-    onyomi: "まん、ばん", 
+  {
+    id: 23,
+    kanji: "万",
+    meaning: "vạn (mười nghìn)",
+    onyomi: "まん、ばん",
     kunyomi: "",
     examples: ["一万 (いちまん) - 10000", "万歳 (ばんざい) - banzai"]
   },
-  { 
-    id: 24, 
-    kanji: "円", 
-    meaning: "yên (tiền tệ)", 
-    onyomi: "えん", 
+  {
+    id: 24,
+    kanji: "円",
+    meaning: "yên (tiền tệ)",
+    onyomi: "えん",
     kunyomi: "まる",
     examples: ["百円 (ひゃくえん) - 100 yên", "円安 (えんやす) - yên rẻ"]
   },
-  { 
-    id: 25, 
-    kanji: "学", 
-    meaning: "học", 
-    onyomi: "がく", 
+  {
+    id: 25,
+    kanji: "学",
+    meaning: "học",
+    onyomi: "がく",
     kunyomi: "まな",
     examples: ["学校 (がっこう) - trường học", "大学 (だいがく) - đại học"]
   },
-  { 
-    id: 26, 
-    kanji: "生", 
-    meaning: "sinh, sống", 
-    onyomi: "せい、しょう", 
+  {
+    id: 26,
+    kanji: "生",
+    meaning: "sinh, sống",
+    onyomi: "せい、しょう",
     kunyomi: "い、う、なま",
     examples: ["学生 (がくせい) - học sinh", "先生 (せんせい) - giáo viên"]
   },
-  { 
-    id: 27, 
-    kanji: "先", 
-    meaning: "tiên, trước", 
-    onyomi: "せん", 
+  {
+    id: 27,
+    kanji: "先",
+    meaning: "tiên, trước",
+    onyomi: "せん",
     kunyomi: "さき",
     examples: ["先生 (せんせい) - giáo viên", "先週 (せんしゅう) - tuần trước"]
   },
-  { 
-    id: 28, 
-    kanji: "会", 
-    meaning: "hội, gặp", 
-    onyomi: "かい、え", 
+  {
+    id: 28,
+    kanji: "会",
+    meaning: "hội, gặp",
+    onyomi: "かい、え",
     kunyomi: "あ",
     examples: ["会社 (かいしゃ) - công ty", "会議 (かいぎ) - hội nghị"]
   },
-  { 
-    id: 29, 
-    kanji: "社", 
-    meaning: "xã, công ty", 
-    onyomi: "しゃ", 
+  {
+    id: 29,
+    kanji: "社",
+    meaning: "xã, công ty",
+    onyomi: "しゃ",
     kunyomi: "やしろ",
     examples: ["会社 (かいしゃ) - công ty", "社会 (しゃかい) - xã hội"]
   },
-  { 
-    id: 30, 
-    kanji: "員", 
-    meaning: "viên, thành viên", 
-    onyomi: "いん", 
+  {
+    id: 30,
+    kanji: "員",
+    meaning: "viên, thành viên",
+    onyomi: "いん",
     kunyomi: "",
     examples: ["会社員 (かいしゃいん) - nhân viên công ty", "店員 (てんいん) - nhân viên cửa hàng"]
   },
-  { 
-    id: 31, 
-    kanji: "医", 
-    meaning: "y, y học", 
-    onyomi: "い", 
+  {
+    id: 31,
+    kanji: "医",
+    meaning: "y, y học",
+    onyomi: "い",
     kunyomi: "",
     examples: ["医者 (いしゃ) - bác sĩ", "医学 (いがく) - y học"]
   },
-  { 
-    id: 32, 
-    kanji: "者", 
-    meaning: "giả, người", 
-    onyomi: "しゃ", 
+  {
+    id: 32,
+    kanji: "者",
+    meaning: "giả, người",
+    onyomi: "しゃ",
     kunyomi: "もの",
     examples: ["医者 (いしゃ) - bác sĩ", "学者 (がくしゃ) - học giả"]
   },
-  { 
-    id: 33, 
-    kanji: "田", 
-    meaning: "điền, ruộng", 
-    onyomi: "でん", 
+  {
+    id: 33,
+    kanji: "田",
+    meaning: "điền, ruộng",
+    onyomi: "でん",
     kunyomi: "た",
     examples: ["田中 (たなか) - Tanaka", "田んぼ (たんぼ) - ruộng lúa"]
   },
-  { 
-    id: 34, 
-    kanji: "本", 
-    meaning: "bản, gốc, sách", 
-    onyomi: "ほん", 
+  {
+    id: 34,
+    kanji: "本",
+    meaning: "bản, gốc, sách",
+    onyomi: "ほん",
     kunyomi: "もと",
     examples: ["日本 (にほん) - Nhật Bản", "本 (ほん) - quyển sách"]
   },
-  { 
-    id: 35, 
-    kanji: "中", 
-    meaning: "trung, giữa, trong", 
-    onyomi: "ちゅう", 
+  {
+    id: 35,
+    kanji: "中",
+    meaning: "trung, giữa, trong",
+    onyomi: "ちゅう",
     kunyomi: "なか",
     examples: ["中国 (ちゅうごく) - Trung Quốc", "中学校 (ちゅうがっこう) - trường trung học cơ sở"]
   },
-  { 
-    id: 36, 
-    kanji: "国", 
-    meaning: "quốc, nước", 
-    onyomi: "こく", 
+  {
+    id: 36,
+    kanji: "国",
+    meaning: "quốc, nước",
+    onyomi: "こく",
     kunyomi: "くに",
     examples: ["中国 (ちゅうごく) - Trung Quốc", "外国 (がいこく) - nước ngoài"]
-  },
-  { 
-    id: 37, 
-    kanji: "年", 
-    meaning: "năm", 
-    onyomi: "ねん", 
-    kunyomi: "とし",
-    examples: ["今年 (ことし) - năm nay", "来年 (らいねん) - năm sau"]
-  },
+  }
 ];
 // ==================== CODE CHÍNH ====================
 const questionEl = document.getElementById("question");
@@ -574,8 +566,8 @@ let explanationText = "";
 let selectedSubject = "";
 let timerInterval = null;
 let userScore = 0;
-let userStreak = 0; 
-let maxStreak = 0; 
+let userStreak = 0;
+let maxStreak = 0;
 let currentQuestionType = ""; // "multiple-choice" - "essay" - "kanji"
 let questionCounter = 0; // Đếm số câu hỏi để chèn Kanji
 
