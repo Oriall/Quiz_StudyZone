@@ -1,4 +1,4 @@
-// ==================== DATA TỪ VỰNG ====================
+// ==================== BỘ DATA TỪ VỰNG (Bộ 1) ====================
 const vocabularyData = [
   // Bài 4
   { id: 1, hiragana: "おきます", kanji: "", meaning: "thức dậy" },
@@ -15,8 +15,8 @@ const vocabularyData = [
   { id: 12, hiragana: "でんわばんごう", kanji: "電話番号", meaning: "số điện thoại" },
   { id: 13, hiragana: "なんばん", kanji: "何番", meaning: "số mấy" },
   { id: 14, hiragana: "いま", kanji: "今", meaning: "bây giờ" },
-  { id: 15, hiragana: "～じ", kanji: "～時", meaning: "~giờ" },
-  { id: 16, hiragana: "～ふん / ～ぷん", kanji: "～分", meaning: "～phút" },
+  { id: 15, hiragana: "じ", kanji: "～時", meaning: "~giờ" },
+  { id: 16, hiragana: "ふん / ～ぷん", kanji: "～分", meaning: "～phút" },
   { id: 17, hiragana: "はん", kanji: "半", meaning: "phân nửa" },
   { id: 18, hiragana: "なんじ", kanji: "何時", meaning: "mấy giờ" },
   { id: 19, hiragana: "なんぷん", kanji: "何分", meaning: "mấy phút" },
@@ -93,7 +93,7 @@ const vocabularyData = [
   { id: 88, hiragana: "じゅうよっか", kanji: "１４日", meaning: "ngày 14, 14 ngày" },
   { id: 89, hiragana: "はつか", kanji: "２０日", meaning: "ngày 20, 20 ngày" },
   { id: 90, hiragana: "にじゅうよっか", kanji: "２４日", meaning: "ngày 24, 24 ngày" },
-  { id: 91, hiragana: "―にち", kanji: "―日", meaning: "ngày -, – ngày" },
+  { id: 91, hiragana: "にち", kanji: "―日", meaning: "ngày -, – ngày" },
   { id: 92, hiragana: "なんにち", kanji: "何日", meaning: "ngày mấy, ngày bao nhiêu, mấy ngày, bao nhiêu ngày" },
   { id: 93, hiragana: "いつ", kanji: "", meaning: "bao giờ, khi nào" },
   { id: 94, hiragana: "たんじょうび", kanji: "誕生日", meaning: "sinh nhật" },
@@ -112,9 +112,9 @@ const vocabularyData = [
   { id: 105, hiragana: "よみます", kanji: "読みます", meaning: "đọc" },
   { id: 106, hiragana: "かきます", kanji: "書きます", meaning: "viết, vẽ" },
   { id: 107, hiragana: "かいます", kanji: "買います", meaning: "mua" },
-  { id: 108, hiragana: "とります [しゃしんを～]", kanji: "撮ります [写真を～]", meaning: "chụp [ảnh]" },
+  { id: 108, hiragana: "とります", kanji: "撮ります [写真を～]", meaning: "chụp [ảnh]" },
   { id: 109, hiragana: "します", kanji: "", meaning: "làm" },
-  { id: 110, hiragana: "あいます [ともだちに～]", kanji: "会います [友達に～]", meaning: "gặp [bạn]" },
+  { id: 110, hiragana: "あいます", kanji: "会います [友達に～]", meaning: "gặp [bạn]" },
   { id: 111, hiragana: "ごはん", kanji: "", meaning: "cơm, bữa ăn" },
   { id: 112, hiragana: "あさごはん", kanji: "朝ごはん", meaning: "cơm sáng" },
   { id: 113, hiragana: "ひるごはん", kanji: "昼ごはん", meaning: "cơm trưa" },
@@ -128,10 +128,10 @@ const vocabularyData = [
   { id: 121, hiragana: "みず", kanji: "水", meaning: "nước" },
   { id: 122, hiragana: "おちゃ", kanji: "お茶", meaning: "trà (nói chung)" },
   { id: 123, hiragana: "こうちゃ", kanji: "紅茶", meaning: "trà đen" },
-  { id: 124, hiragana: "ぎゅうにゅう (ミルク)", kanji: "牛乳", meaning: "sữa bò" },
+  { id: 124, hiragana: "ぎゅうにゅう", kanji: "牛乳", meaning: "sữa bò" },
   { id: 125, hiragana: "ジュース", kanji: "", meaning: "nước hoa quả" },
   { id: 126, hiragana: "ビール", kanji: "", meaning: "bia" },
-  { id: 127, hiragana: "[お]さけ", kanji: "[お]酒", meaning: "rượu, rượu sake" },
+  { id: 127, hiragana: "さけ", kanji: "[お]酒", meaning: "rượu, rượu sake" },
   { id: 128, hiragana: "ビデオ", kanji: "", meaning: "video, băng video, đầu video" },
   { id: 129, hiragana: "えいが", kanji: "映画", meaning: "phim, điện ảnh" },
   { id: 130, hiragana: "ＣＤ", kanji: "", meaning: "đĩa CD" },
@@ -144,7 +144,7 @@ const vocabularyData = [
   { id: 137, hiragana: "しゅくだい", kanji: "宿題", meaning: "bài tập về nhà (～をします: làm bài tập)" },
   { id: 138, hiragana: "テニス", kanji: "", meaning: "quần vợt (～をします: đánh quần vợt)" },
   { id: 139, hiragana: "サッカー", kanji: "", meaning: "bóng đá (～をします: chơi bóng đá)" },
-  { id: 140, hiragana: "[お]はなみ", kanji: "[お]花見", meaning: "việc ngắm hoa anh đào (～をします: ngắm hoa anh đào)" },
+  { id: 140, hiragana: "はなみ", kanji: "[お]花見", meaning: "việc ngắm hoa anh đào (～をします: ngắm hoa anh đào)" },
   { id: 141, hiragana: "なに", kanji: "何", meaning: "cái gì, gì" },
   { id: 142, hiragana: "いっしょに", kanji: "", meaning: "cùng, cùng nhau" },
   { id: 143, hiragana: "ちょっと", kanji: "", meaning: "một chút" },
@@ -155,7 +155,7 @@ const vocabularyData = [
   { id: 148, hiragana: "いいですね。", kanji: "", meaning: "Được đấy nhỉ./ hay quá." },
   { id: 149, hiragana: "わかりました。", kanji: "", meaning: "Tôi hiểu rồi/ vâng ạ." },
   { id: 150, hiragana: "なんですか", kanji: "何ですか。", meaning: "Có gì đấy ạ?/ cái gì vậy?/ vâng có tôi. (câu trả lời khi ai đó gọi tên mình)" },
-  { id: 151, hiragana: "じゃ、また[あした]。", kanji: "", meaning: "Hẹn gặp lại [ngày mai]." },
+  { id: 151, hiragana: "じゃ、また", kanji: "", meaning: "Hẹn gặp lại [ngày mai]." },
   { id: 152, hiragana: "メキシコ", kanji: "", meaning: "Mexico" },
 
   // Bài 7
@@ -203,17 +203,17 @@ const vocabularyData = [
 
   // Bài 8
   { id: 194, hiragana: "みにくい", kanji: "", meaning: "Xấu" },
-  { id: 195, hiragana: "ハンサム(な)", kanji: "", meaning: "đẹp trai" },
-  { id: 196, hiragana: "きれい(な)", kanji: "", meaning: "(cảnh) đẹp, đẹp (gái), sạch" },
-  { id: 197, hiragana: "しずか(な)", kanji: "静か(な)", meaning: "yên tĩnh" },
-  { id: 198, hiragana: "にぎやか(な)", kanji: "賑やか(な)", meaning: "nhộn nhịp" },
-  { id: 199, hiragana: "ゆうめい(な)", kanji: "有名(な)", meaning: "nổi tiếng" },
-  { id: 200, hiragana: "しんせつ(な)", kanji: "親切(な)", meaning: "tử tế" },
-  { id: 201, hiragana: "げんき(な)", kanji: "元気(な)", meaning: "khỏe" },
+  { id: 195, hiragana: "ハンサム", kanji: "", meaning: "đẹp trai" },
+  { id: 196, hiragana: "きれい", kanji: "", meaning: "(cảnh) đẹp, đẹp (gái), sạch" },
+  { id: 197, hiragana: "しずか", kanji: "静か(な)", meaning: "yên tĩnh" },
+  { id: 198, hiragana: "にぎやか", kanji: "賑やか(な)", meaning: "nhộn nhịp" },
+  { id: 199, hiragana: "ゆうめい", kanji: "有名(な)", meaning: "nổi tiếng" },
+  { id: 200, hiragana: "しんせつ", kanji: "親切(な)", meaning: "tử tế" },
+  { id: 201, hiragana: "げんき", kanji: "元気(な)", meaning: "khỏe" },
   { id: 202, hiragana: "ひま(な)", kanji: "暇(な)", meaning: "rảnh rỗi" },
   { id: 203, hiragana: "いそがしい", kanji: "忙しい", meaning: "bận rộn" },
-  { id: 204, hiragana: "べんり(な)", kanji: "便利(な)", meaning: "tiện lợi" },
-  { id: 205, hiragana: "すてき(な)", kanji: "", meaning: "tuyệt vời" },
+  { id: 204, hiragana: "べんり", kanji: "便利(な)", meaning: "tiện lợi" },
+  { id: 205, hiragana: "すてき", kanji: "", meaning: "tuyệt vời" },
   { id: 206, hiragana: "おおきい", kanji: "大きい", meaning: "to, lớn" },
   { id: 207, hiragana: "ちいさい", kanji: "小さい", meaning: "nhỏ, bé" },
   { id: 208, hiragana: "あたらしい", kanji: "新しい", meaning: "mới" },
@@ -247,12 +247,310 @@ const vocabularyData = [
   { id: 236, hiragana: "りょう", kanji: "", meaning: "ký túc xá" },
   { id: 237, hiragana: "べんきょう", kanji: "勉強", meaning: "học tập ( danh từ )" },
   { id: 238, hiragana: "せいかつ", kanji: "生活", meaning: "cuộc sống" },
-  { id: 239, hiragana: "(お)しごと", kanji: "お仕事", meaning: "công việc" },
+  { id: 239, hiragana: "しごと", kanji: "お仕事", meaning: "công việc" },
   { id: 240, hiragana: "どう", kanji: "", meaning: "như thế nào" },
   { id: 241, hiragana: "どんな", kanji: "", meaning: "～nào" },
   { id: 242, hiragana: "どれ", kanji: "", meaning: "cái nào" }
 ];
-
+// ==================== BỘ DATA KANJI (Bộ 2) ====================
+const kanjiData = [
+  { 
+    id: 1, 
+    kanji: "日", 
+    meaning: "mặt trời, ngày", 
+    onyomi: "ニチ、ジツ", 
+    kunyomi: "ひ、か",
+    examples: ["日本 (にほん) - Nhật Bản", "毎日 (まいにち) - mỗi ngày"]
+  },
+  { 
+    id: 2, 
+    kanji: "月", 
+    meaning: "mặt trăng, tháng", 
+    onyomi: "ゲツ、ガツ", 
+    kunyomi: "つき",
+    examples: ["月曜日 (げつようび) - thứ hai", "一月 (いちがつ) - tháng một"]
+  },
+  { 
+    id: 3, 
+    kanji: "火", 
+    meaning: "lửa", 
+    onyomi: "カ", 
+    kunyomi: "ひ",
+    examples: ["火曜日 (かようび) - thứ ba", "火事 (かじ) - hỏa hoạn"]
+  },
+  { 
+    id: 4, 
+    kanji: "水", 
+    meaning: "nước", 
+    onyomi: "スイ", 
+    kunyomi: "みず",
+    examples: ["水曜日 (すいようび) - thứ tư", "水道 (すいどう) - vòi nước"]
+  },
+  { 
+    id: 5, 
+    kanji: "木", 
+    meaning: "cây, gỗ", 
+    onyomi: "モク、ボク", 
+    kunyomi: "き",
+    examples: ["木曜日 (もくようび) - thứ năm", "木材 (もくざい) - gỗ"]
+  },
+  { 
+    id: 6, 
+    kanji: "金", 
+    meaning: "vàng, tiền", 
+    onyomi: "キン、コン", 
+    kunyomi: "かね",
+    examples: ["金曜日 (きんようび) - thứ sáu", "お金 (おかね) - tiền"]
+  },
+  { 
+    id: 7, 
+    kanji: "土", 
+    meaning: "đất", 
+    onyomi: "ド、ト", 
+    kunyomi: "つち",
+    examples: ["土曜日 (どようび) - thứ bảy", "土地 (とち) - đất đai"]
+  },
+  { 
+    id: 8, 
+    kanji: "人", 
+    meaning: "người", 
+    onyomi: "ジン、ニン", 
+    kunyomi: "ひと",
+    examples: ["日本人 (にほんじん) - người Nhật", "人気 (にんき) - phổ biến"]
+  },
+  { 
+    id: 9, 
+    kanji: "山", 
+    meaning: "núi", 
+    onyomi: "サン", 
+    kunyomi: "やま",
+    examples: ["富士山 (ふじさん) - núi Phú Sĩ", "山田 (やまだ) - Yamada"]
+  },
+  { 
+    id: 10, 
+    kanji: "川", 
+    meaning: "sông", 
+    onyomi: "セン", 
+    kunyomi: "かわ",
+    examples: ["川口 (かわぐち) - Kawaguchi", "小川 (おがわ) - con suối"]
+  },
+  { 
+    id: 11, 
+    kanji: "一", 
+    meaning: "một", 
+    onyomi: "いち、いつ", 
+    kunyomi: "",
+    examples: ["一つ (ひとつ) - một cái", "一月 (いちがつ) - tháng một"]
+  },
+  { 
+    id: 12, 
+    kanji: "二", 
+    meaning: "hai", 
+    onyomi: "に", 
+    kunyomi: "",
+    examples: ["二つ (ふたつ) - hai cái", "二月 (にがつ) - tháng hai"]
+  },
+  { 
+    id: 13, 
+    kanji: "三", 
+    meaning: "ba", 
+    onyomi: "さん", 
+    kunyomi: "",
+    examples: ["三つ (みっつ) - ba cái", "三月 (さんがつ) - tháng ba"]
+  },
+  { 
+    id: 14, 
+    kanji: "四", 
+    meaning: "bốn", 
+    onyomi: "し", 
+    kunyomi: "",
+    examples: ["四つ (よっつ) - bốn cái", "四月 (しがつ) - tháng tư"]
+  },
+  { 
+    id: 15, 
+    kanji: "五", 
+    meaning: "năm", 
+    onyomi: "ご", 
+    kunyomi: "",
+    examples: ["五つ (いつつ) - năm cái", "五月 (ごがつ) - tháng năm"]
+  },
+  { 
+    id: 16, 
+    kanji: "六", 
+    meaning: "sáu", 
+    onyomi: "ろく", 
+    kunyomi: "",
+    examples: ["六つ (むっつ) - sáu cái", "六月 (ろくがつ) - tháng sáu"]
+  },
+  { 
+    id: 17, 
+    kanji: "七", 
+    meaning: "bảy", 
+    onyomi: "しち", 
+    kunyomi: "",
+    examples: ["七つ (ななつ) - bảy cái", "七月 (しちがつ) - tháng bảy"]
+  },
+  { 
+    id: 18, 
+    kanji: "八", 
+    meaning: "tám", 
+    onyomi: "はち", 
+    kunyomi: "",
+    examples: ["八つ (やっつ) - tám cái", "八月 (はちがつ) - tháng tám"]
+  },
+  { 
+    id: 19, 
+    kanji: "九", 
+    meaning: "chín", 
+    onyomi: "きゅう、く", 
+    kunyomi: "",
+    examples: ["九つ (ここのつ) - chín cái", "九月 (くがつ) - tháng chín"]
+  },
+  { 
+    id: 20, 
+    kanji: "十", 
+    meaning: "mười", 
+    onyomi: "じゅう", 
+    kunyomi: "",
+    examples: ["十 (じゅう) - mười", "十月 (じゅうがつ) - tháng mười"]
+  },
+  { 
+    id: 21, 
+    kanji: "百", 
+    meaning: "trăm", 
+    onyomi: "ひゃく", 
+    kunyomi: "",
+    examples: ["百円 (ひゃくえん) - 100 yên", "三百 (さんびゃく) - 300"]
+  },
+  { 
+    id: 22, 
+    kanji: "千", 
+    meaning: "nghìn", 
+    onyomi: "せん", 
+    kunyomi: "",
+    examples: ["千円 (せんえん) - 1000 yên", "三千 (さんぜん) - 3000"]
+  },
+  { 
+    id: 23, 
+    kanji: "万", 
+    meaning: "vạn (mười nghìn)", 
+    onyomi: "まん、ばん", 
+    kunyomi: "",
+    examples: ["一万 (いちまん) - 10000", "万歳 (ばんざい) - banzai"]
+  },
+  { 
+    id: 24, 
+    kanji: "円", 
+    meaning: "yên (tiền tệ)", 
+    onyomi: "えん", 
+    kunyomi: "まる",
+    examples: ["百円 (ひゃくえん) - 100 yên", "円安 (えんやす) - yên rẻ"]
+  },
+  { 
+    id: 25, 
+    kanji: "学", 
+    meaning: "học", 
+    onyomi: "がく", 
+    kunyomi: "まな",
+    examples: ["学校 (がっこう) - trường học", "大学 (だいがく) - đại học"]
+  },
+  { 
+    id: 26, 
+    kanji: "生", 
+    meaning: "sinh, sống", 
+    onyomi: "せい、しょう", 
+    kunyomi: "い、う、なま",
+    examples: ["学生 (がくせい) - học sinh", "先生 (せんせい) - giáo viên"]
+  },
+  { 
+    id: 27, 
+    kanji: "先", 
+    meaning: "tiên, trước", 
+    onyomi: "せん", 
+    kunyomi: "さき",
+    examples: ["先生 (せんせい) - giáo viên", "先週 (せんしゅう) - tuần trước"]
+  },
+  { 
+    id: 28, 
+    kanji: "会", 
+    meaning: "hội, gặp", 
+    onyomi: "かい、え", 
+    kunyomi: "あ",
+    examples: ["会社 (かいしゃ) - công ty", "会議 (かいぎ) - hội nghị"]
+  },
+  { 
+    id: 29, 
+    kanji: "社", 
+    meaning: "xã, công ty", 
+    onyomi: "しゃ", 
+    kunyomi: "やしろ",
+    examples: ["会社 (かいしゃ) - công ty", "社会 (しゃかい) - xã hội"]
+  },
+  { 
+    id: 30, 
+    kanji: "員", 
+    meaning: "viên, thành viên", 
+    onyomi: "いん", 
+    kunyomi: "",
+    examples: ["会社員 (かいしゃいん) - nhân viên công ty", "店員 (てんいん) - nhân viên cửa hàng"]
+  },
+  { 
+    id: 31, 
+    kanji: "医", 
+    meaning: "y, y học", 
+    onyomi: "い", 
+    kunyomi: "",
+    examples: ["医者 (いしゃ) - bác sĩ", "医学 (いがく) - y học"]
+  },
+  { 
+    id: 32, 
+    kanji: "者", 
+    meaning: "giả, người", 
+    onyomi: "しゃ", 
+    kunyomi: "もの",
+    examples: ["医者 (いしゃ) - bác sĩ", "学者 (がくしゃ) - học giả"]
+  },
+  { 
+    id: 33, 
+    kanji: "田", 
+    meaning: "điền, ruộng", 
+    onyomi: "でん", 
+    kunyomi: "た",
+    examples: ["田中 (たなか) - Tanaka", "田んぼ (たんぼ) - ruộng lúa"]
+  },
+  { 
+    id: 34, 
+    kanji: "本", 
+    meaning: "bản, gốc, sách", 
+    onyomi: "ほん", 
+    kunyomi: "もと",
+    examples: ["日本 (にほん) - Nhật Bản", "本 (ほん) - quyển sách"]
+  },
+  { 
+    id: 35, 
+    kanji: "中", 
+    meaning: "trung, giữa, trong", 
+    onyomi: "ちゅう", 
+    kunyomi: "なか",
+    examples: ["中国 (ちゅうごく) - Trung Quốc", "中学校 (ちゅうがっこう) - trường trung học cơ sở"]
+  },
+  { 
+    id: 36, 
+    kanji: "国", 
+    meaning: "quốc, nước", 
+    onyomi: "こく", 
+    kunyomi: "くに",
+    examples: ["中国 (ちゅうごく) - Trung Quốc", "外国 (がいこく) - nước ngoài"]
+  },
+  { 
+    id: 37, 
+    kanji: "年", 
+    meaning: "năm", 
+    onyomi: "ねん", 
+    kunyomi: "とし",
+    examples: ["今年 (ことし) - năm nay", "来年 (らいねん) - năm sau"]
+  },
+];
 // ==================== CODE CHÍNH ====================
 const questionEl = document.getElementById("question");
 const optionsEl = document.getElementById("options");
@@ -278,16 +576,27 @@ let timerInterval = null;
 let userScore = 0;
 let userStreak = 0; 
 let maxStreak = 0; 
-let currentQuestionType = ""; // "multiple-choice" - "essay"
+let currentQuestionType = ""; // "multiple-choice" - "essay" - "kanji"
+let questionCounter = 0; // Đếm số câu hỏi để chèn Kanji
 
 // Quản lý lịch sử câu hỏi
 let questionHistory = [];
+let kanjiHistory = [];
 
 function saveQuestionToHistory(questionText) {
   if (!questionHistory.includes(questionText)) {
     questionHistory.push(questionText);
     if (questionHistory.length > 50) {
       questionHistory.shift();
+    }
+  }
+}
+
+function saveKanjiToHistory(kanjiChar) {
+  if (!kanjiHistory.includes(kanjiChar)) {
+    kanjiHistory.push(kanjiChar);
+    if (kanjiHistory.length > 50) {
+      kanjiHistory.shift();
     }
   }
 }
@@ -333,13 +642,10 @@ function increaseStreak() {
   }
   updateStreak();
 
-
-  // Cập nhật stats cho leaderboard
   if (window.leaderboardSystem) {
     window.leaderboardSystem.updatePlayerStats(userStreak, userScore);
   }
 
-  // Hiệu ứng animation cho streak
   if (streakEl) {
     streakEl.style.transform = "scale(1.3)";
     streakEl.style.color = "#FF6B35";
@@ -349,7 +655,6 @@ function increaseStreak() {
     }, 300);
   }
 
-  // Hiển thị thông báo milestone
   if (userStreak === 5) {
     showStreakMilestone("🔥 Streak x5! Bạn đang rất tốt!");
   } else if (userStreak === 10) {
@@ -361,10 +666,8 @@ function increaseStreak() {
   }
 }
 
-// Reset streak khi trả lời sai
 function resetStreak() {
   if (userStreak > 0) {
-    // Hiệu ứng mất streak
     if (streakEl) {
       streakEl.style.transform = "scale(0.8)";
       streakEl.style.color = "#f44336";
@@ -381,7 +684,6 @@ function resetStreak() {
   }
 }
 
-// Hiển thị thông báo milestone
 function showStreakMilestone(message) {
   const milestone = document.createElement("div");
   milestone.className = "streak-milestone";
@@ -403,13 +705,9 @@ function showStreakMilestone(message) {
   `;
 
   document.body.appendChild(milestone);
-
-  setTimeout(() => {
-    milestone.remove();
-  }, 2000);
+  setTimeout(() => milestone.remove(), 2000);
 }
 
-// Thêm CSS animation cho milestone
 const style = document.createElement("style");
 style.textContent = `
   @keyframes milestonePopup {
@@ -429,22 +727,34 @@ style.textContent = `
       opacity: 1;
     }
   }
+  .kanji-display {
+    font-size: 80px;
+    font-weight: bold;
+    color: #8f39ff;
+    margin: 20px 0;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(143, 57, 255, 0.3);
+  }
+  .kanji-info {
+    background: rgba(143, 57, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-size: 14px;
+    line-height: 1.8;
+  }
 `;
 document.head.appendChild(style);
 
-// Chọn môn học
 function selectSubject(subject) {
   selectedSubject = subject;
   popup.style.display = "none";
-
-  // Reset streak khi đổi môn
   userStreak = 0;
   updateStreak();
-
+  questionCounter = 0; // Reset counter
   loadQuestion();
 }
 
-// Đếm giờ
 function startTimer(duration) {
   clearInterval(timerInterval);
   let timeLeft = duration;
@@ -468,10 +778,9 @@ function updateTimerDisplay(seconds) {
 }
 
 function handleTimeout() {
-  // Reset streak khi hết giờ
   resetStreak();
 
-  if (currentQuestionType === "multiple-choice") {
+  if (currentQuestionType === "multiple-choice" || currentQuestionType === "kanji") {
     const buttons = document.querySelectorAll(".option-btn");
     buttons.forEach(btn => {
       btn.disabled = true;
@@ -492,16 +801,21 @@ function handleTimeout() {
 
 // ==================== CHỌN LOẠI CÂU HỎI ====================
 function chooseQuestionType() {
-  // Chỉ áp dụng cho môn tiếng Nhật
   if (selectedSubject !== "japanese") {
     return "multiple-choice";
   }
 
-  // Ngẫu nhiên 50-50 giữa trắc nghiệm và tự luận
+  questionCounter++;
+
+  // Mỗi 3 câu từ vựng thì chèn 1 câu Kanji
+  if (questionCounter % 4 === 0) {
+    return "kanji";
+  }
+
+  // Ngẫu nhiên giữa trắc nghiệm và tự luận cho từ vựng
   return Math.random() < 0.5 ? "multiple-choice" : "essay";
 }
 
-// ==================== SHOW/HIDE CONTAINERS ====================
 function showMultipleChoiceContainer() {
   if (quizContainer) quizContainer.style.display = "block";
   if (essayContainer) essayContainer.style.display = "none";
@@ -512,7 +826,83 @@ function showEssayContainer() {
   if (essayContainer) essayContainer.style.display = "block";
 }
 
-// ==================== TẠO CÂU HỎI TRẮC NGHIỆM ====================
+// ==================== TẠO CÂU HỎI KANJI ====================
+function generateKanjiQuestion() {
+  const availableKanji = kanjiData.filter(k =>
+    !kanjiHistory.includes(k.kanji)
+  );
+
+  if (availableKanji.length < 4) {
+    kanjiHistory = [];
+  }
+
+  const kanjiToUse = availableKanji.length >= 4 ? availableKanji : kanjiData;
+  const correctKanji = kanjiToUse[Math.floor(Math.random() * kanjiToUse.length)];
+
+  // Tạo 3 đáp án sai
+  const wrongKanji = [];
+  while (wrongKanji.length < 3) {
+    const randomKanji = kanjiData[Math.floor(Math.random() * kanjiData.length)];
+    if (randomKanji.id !== correctKanji.id &&
+      !wrongKanji.find(k => k.id === randomKanji.id)) {
+      wrongKanji.push(randomKanji);
+    }
+  }
+
+  // Kiểm tra xem có phải là số (1-10, 100, 1000, 10000) không
+  const numberKanji = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "百", "千", "万"];
+  const isNumberKanji = numberKanji.includes(correctKanji.kanji);
+
+  // Tạo danh sách các kiểu câu hỏi
+  const questionTypes = [
+    {
+      type: "meaning",
+      question: `Chữ Kanji "${correctKanji.kanji}" có nghĩa là gì?`,
+      options: [correctKanji, ...wrongKanji].sort(() => Math.random() - 0.5).map(k => k.meaning),
+      answer: correctKanji.meaning
+    },
+    {
+      type: "reading",
+      question: `Cách đọc Onyomi của chữ "${correctKanji.kanji}" là gì?`,
+      options: [correctKanji, ...wrongKanji].sort(() => Math.random() - 0.5).map(k => k.onyomi),
+      answer: correctKanji.onyomi
+    }
+  ];
+
+  // Chỉ thêm câu hỏi Kunyomi nếu KHÔNG phải là số và có kunyomi
+  if (!isNumberKanji && correctKanji.kunyomi && correctKanji.kunyomi.trim() !== "") {
+    questionTypes.push({
+      type: "kunyomi",
+      question: `Cách đọc Kunyomi của chữ "${correctKanji.kanji}" là gì?`,
+      options: [correctKanji, ...wrongKanji].sort(() => Math.random() - 0.5).map(k => k.kunyomi),
+      answer: correctKanji.kunyomi
+    });
+  }
+
+  const selectedType = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+
+  const explanation = `
+    <div class="kanji-display">${correctKanji.kanji}</div>
+    <div class="kanji-info">
+      <strong>Nghĩa:</strong> ${correctKanji.meaning}<br>
+      <strong>Onyomi:</strong> ${correctKanji.onyomi}<br>
+      ${correctKanji.kunyomi && correctKanji.kunyomi.trim() !== "" ? `<strong>Kunyomi:</strong> ${correctKanji.kunyomi}<br>` : ''}
+      <strong>Ví dụ:</strong><br>
+      ${correctKanji.examples.map(ex => `• ${ex}`).join('<br>')}
+    </div>
+  `;
+
+  saveKanjiToHistory(correctKanji.kanji);
+
+  return {
+    question: selectedType.question,
+    options: selectedType.options,
+    answer: selectedType.answer,
+    explanation: explanation
+  };
+}
+
+// ==================== TẠO CÂU HỎI TỪ VỰNG ====================
 function generateJapaneseMultipleChoice() {
   const availableWords = vocabularyData.filter(word =>
     !questionHistory.includes(word.hiragana)
@@ -549,7 +939,6 @@ function generateJapaneseMultipleChoice() {
   return questionData;
 }
 
-// ==================== TẠO CÂU HỎI TỰ LUẬN ====================
 function generateJapaneseEssay() {
   const availableWords = vocabularyData.filter(word =>
     !questionHistory.includes(word.hiragana)
@@ -575,7 +964,6 @@ function generateJapaneseEssay() {
 
 // ==================== LOAD CÂU HỎI ====================
 async function loadQuestion() {
-  // Reset feedback tự luận
   if (essayFeedbackEl) essayFeedbackEl.textContent = "";
   if (essayInputEl) {
     essayInputEl.value = "";
@@ -588,10 +976,15 @@ async function loadQuestion() {
   let questionData;
 
   if (selectedSubject === "japanese") {
-    // Chọn loại câu hỏi ngẫu nhiên
     currentQuestionType = chooseQuestionType();
 
-    if (currentQuestionType === "essay") {
+    // Câu hỏi KANJI
+    if (currentQuestionType === "kanji") {
+      showMultipleChoiceContainer();
+      questionData = generateKanjiQuestion();
+    }
+    // Câu hỏi TỰ LUẬN
+    else if (currentQuestionType === "essay") {
       showEssayContainer();
       questionData = generateJapaneseEssay();
 
@@ -599,17 +992,16 @@ async function loadQuestion() {
       correctAnswer = questionData.answer;
       explanationText = questionData.explanation;
 
-      // Focus vào ô input
       setTimeout(() => essayInputEl.focus(), 100);
-
-      startTimer(30); // 30 giây cho câu tự luận
+      startTimer(30);
       return;
-    } else {
+    }
+    // Câu hỏi TRẮC NGHIỆM
+    else {
       showMultipleChoiceContainer();
       questionData = generateJapaneseMultipleChoice();
     }
   } else {
-    // Các môn khác vẫn dùng trắc nghiệm
     showMultipleChoiceContainer();
     currentQuestionType = "multiple-choice";
     questionEl.textContent = "Đang tải câu hỏi...";
@@ -626,11 +1018,10 @@ async function loadQuestion() {
     saveQuestionToHistory(questionData.question);
   }
 
-  questionEl.textContent = questionData.question;
+  questionEl.innerHTML = questionData.question;
   correctAnswer = questionData.answer;
   explanationText = questionData.explanation || "Không có giải thích.";
 
-  // Tạo các nút trắc nghiệm
   optionsEl.innerHTML = "";
   questionData.options.forEach(option => {
     const btn = document.createElement("button");
@@ -644,7 +1035,7 @@ async function loadQuestion() {
   });
 
   if (selectedSubject === "it" || selectedSubject === "english" || selectedSubject === "japanese") {
-    startTimer(10);
+    startTimer(15);
   } else {
     startTimer(60);
   }
@@ -658,10 +1049,10 @@ function handleAnswer(button, selectedOption) {
   if (selectedOption === correctAnswer) {
     button.classList.add("correct");
     addPoint();
-    increaseStreak(); // Tăng streak khi đúng
+    increaseStreak();
   } else {
     button.classList.add("incorrect");
-    resetStreak(); // Reset streak khi sai
+    resetStreak();
     buttons.forEach(btn => {
       if (btn.textContent === correctAnswer) {
         btn.classList.add("correct");
@@ -683,27 +1074,25 @@ function submitEssayAnswer() {
   if (userAnswer === "") {
     essayFeedbackEl.textContent = "⚠️ Bạn chưa nhập câu trả lời!";
     essayFeedbackEl.style.color = "#ff9800";
-    resetStreak(); // Reset streak khi không trả lời
+    resetStreak();
     showExplanation();
     return;
   }
 
-  // So sánh câu trả lời (không phân biệt hoa thường, loại bỏ khoảng trắng)
   if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
     essayFeedbackEl.textContent = "✅ Chính xác! Bạn đã trả lời đúng.";
     essayFeedbackEl.style.color = "#4CAF50";
     addPoint();
-    increaseStreak(); // Tăng streak khi đúng
+    increaseStreak();
   } else {
     essayFeedbackEl.textContent = `❌ Sai rồi! Đáp án đúng là: ${correctAnswer}`;
     essayFeedbackEl.style.color = "#f44336";
-    resetStreak(); // Reset streak khi sai
+    resetStreak();
   }
 
   showExplanation();
 }
 
-// Gắn sự kiện cho nút submit và Enter key
 if (essaySubmitBtn) {
   essaySubmitBtn.onclick = submitEssayAnswer;
 }
@@ -783,7 +1172,7 @@ Yêu cầu:
 }
 
 function showExplanation() {
-  document.getElementById("explanation-text").textContent = explanationText;
+  document.getElementById("explanation-text").innerHTML = explanationText;
   document.getElementById("explanation-popup").style.display = "flex";
 }
 
@@ -791,6 +1180,5 @@ function closeExplanation() {
   document.getElementById("explanation-popup").style.display = "none";
 }
 
-// Khởi tạo điểm và streak ban đầu
 updateScore();
 updateStreak();
