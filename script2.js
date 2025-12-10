@@ -30,7 +30,7 @@ const vocabularyData = [
   { id: 27, hiragana: "きょねん", kanji: "去年", meaning: "năm ngoái" },
   { id: 28, hiragana: "ことし", kanji: "", meaning: "năm nay" },
   { id: 29, hiragana: "らいねん", kanji: "来年", meaning: "năm sau" },
-  { id: 30, hiragana: "―がつ", kanji: "―月", meaning: "tháng –" },
+  { id: 30, hiragana: "ーがつ", kanji: "―月", meaning: "tháng –" },
   { id: 31, hiragana: "なんがつ", kanji: "何月", meaning: "tháng mấy" },
   { id: 32, hiragana: "ついたち", kanji: "１日", meaning: "ngày mồng 1" },
   { id: 33, hiragana: "ふつか", kanji: "２日", meaning: "ngày mồng 2, 2 ngày" },
