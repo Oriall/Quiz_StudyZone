@@ -106,7 +106,7 @@ const vocabularyData = [
   { id: 101, hiragana: "ええ", kanji: "", meaning: "vâng, được (cách nói thân mật của 「はい」)" },
   { id: 102, hiragana: "いいですね。", kanji: "", meaning: "Được đấy nhỉ./ hay quá." },
   { id: 103, hiragana: "わかりました。", kanji: "", meaning: "Tôi hiểu rồi/ vâng ạ." },
-  { id: 104, hiragana: "なんですか", kanji: "何ですか。", meaning: "Có gì đấy ạ?/ cái gì vậy?/ vâng có tôi. (câu trả lời khi ai đó gọi tên mình)" },
+  { id: 104, hiragana: "なんですか。", kanji: "何ですか。", meaning: "Có gì đấy ạ?/ cái gì vậy?/ vâng có tôi. (câu trả lời khi ai đó gọi tên mình)" },
   { id: 105, hiragana: "じゃ、また", kanji: "", meaning: "Hẹn gặp lại" },
   { id: 106, hiragana: "メキシコ", kanji: "", meaning: "Mexico" },
 
